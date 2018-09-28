@@ -19,7 +19,7 @@ def facebook():
                  {
                      "measurement": "rtt_tcp_sent",
                      "tags": {
-                         "host": "facebook.com",
+                         "target": "facebook.com",
                      },
                      "time": str(datetime.datetime.today()),
                      "fields": {
@@ -39,7 +39,7 @@ def facebook():
                  {
                      "measurement": "rtt_tcp_rcvd",
                      "tags": {
-                         "host": "facebook.com",
+                         "target": "facebook.com",
                      },
                      "time": str(datetime.datetime.today()),
                      "fields": {
@@ -66,7 +66,7 @@ def google():
                  {
                      "measurement": "rtt_tcp_sent",
                      "tags": {
-                         "host": "google.com",
+                         "target": "google.com",
                      },
                      "time": str(datetime.datetime.today()),
                      "fields": {
@@ -86,7 +86,7 @@ def google():
                  {
                      "measurement": "rtt_tcp_rcvd",
                      "tags": {
-                         "host": "google.com",
+                         "target": "google.com",
                      },
                      "time": str(datetime.datetime.today()),
                      "fields": {
@@ -100,7 +100,7 @@ def google():
 if __name__ == '__main__':
     reTime = re.compile(r'(\d+\.\d+)')
     influx = credPass()
-    client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='ping')
+    client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='network_telemetry')
     fbDef = threading.Thread(name='facebook', target=facebook)
     glDef = threading.Thread(name='google', target=google)
     fbDef.start()

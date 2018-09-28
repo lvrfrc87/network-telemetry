@@ -15,7 +15,7 @@ def facebook():
          {
              "measurement": "ping_rtt",
              "tags": {
-                 "host": "facebook.com",
+                 "target": "facebook.com",
              },
              "time": str(datetime.datetime.today()),
              "fields": {
@@ -38,7 +38,7 @@ def google():
          {
              "measurement": "ping_rtt",
              "tags": {
-                 "host": "google.com",
+                 "target": "google.com",
              },
              "time": str(datetime.datetime.today()),
              "fields": {
@@ -52,7 +52,7 @@ def google():
 if __name__ == '__main__':
     rttTime = re.compile(r'(time=)(\d+\.\d+)')
     influx = credPass()
-    client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='ping')
+    client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='network_telemetry')
     fbDef = threading.Thread(name='facebook', target=facebook)
     glDef = threading.Thread(name='google', target=google)
     fbDef.start()

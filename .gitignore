@@ -1,0 +1,3 @@
+influxdb/data
+influxdb/meta
+influxdb/wal
