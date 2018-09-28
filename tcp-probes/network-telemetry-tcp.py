@@ -100,7 +100,7 @@ def google():
 if __name__ == '__main__':
     reTime = re.compile(r'(\d+\.\d+)')
     influx = credPass()
-    client = InfluxDBClient(host='10.255.255.254', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='ping')
+    client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='ping')
     fbDef = threading.Thread(name='facebook', target=facebook)
     glDef = threading.Thread(name='google', target=google)
     fbDef.start()
