@@ -13,3 +13,5 @@ Grafana is exposed to 0.0.0.0:3000 and is the only container exposed to the netw
 In order to make easier the deployment of the all stack, a bash script is provided. Make sure `deployment.sh` is executable using `chmod +x deployment.sh` command. To execute it `/bin/bash deployment.sh`
 
 ![Data Source](screenshots/data_source.png)
+![Data Source](screenshots/query.png)
+![Data Source](screenshots/dashboard.png)
