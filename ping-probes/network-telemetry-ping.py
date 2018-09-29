@@ -10,7 +10,7 @@ def facebook():
         if rtt:
             value = float(rtt.group(2))
         else:
-            value = 0
+            value = float(0.000)
         jsonBody = [
          {
              "measurement": "ping_rtt",
@@ -33,7 +33,7 @@ def google():
         if rtt:
             value = float(rtt.group(2))
         else:
-            value = 0
+            value = float(0.000)
         jsonBody = [
          {
              "measurement": "ping_rtt",
