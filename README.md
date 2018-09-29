@@ -12,4 +12,4 @@ Grafana is exposed to 0.0.0.0:3000 and is the only container exposed to the netw
 
 In order to make easier the deployment of the all stack, a bash script is provided. Make sure `deployment.sh` is executable using `chmod +x deployment.sh` command. To execute it `/bin/bash deployment.sh`
 
-![alt text](https://gitlab.com/networkAutomation/network-telemetry/blob/master/screenshots/data_source.png "Data Source")
+![Data Source](https://gitlab.com/networkAutomation/network-telemetry/blob/master/screenshots/data_source.png)
