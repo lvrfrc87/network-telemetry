@@ -8,10 +8,18 @@ The python code can be customized adding new functions that include new targets.
 
 Influxdb container will mount the database storage under `$PWD/influxdb` and will use a custom config file copied from `$PWD/influxdb/config/influxdb.conf`. Logs for Influxdb are in part disabled and raised to `error` level. That was necessary due to log verbosity that fill the disk space in few days.
 
-Grafana is exposed to 0.0.0.0:3000 and is the only container exposed to the network. The other container are linked each other with `--link` option passed on `docker run`. If you want install some plugin, you need to log into the container and install from there. In this case is suggested to mount and external volume where plugin can be saved as well as all dashboard settings. Once up and running, Influxdb has to be added as datasource to Grafana.
+Grafana is listening to 0.0.0.0:3000 and is the only container exposed to the network. The other containers are linked each other with `--link` option passed on `docker run`. If you want install some plugin, you need to log into the container and install from there. The plugins as well as the dashboard settings are saved on external disk mount under `$PWD/grafana`. Once up and running, Influxdb has to be added as datasource to Grafana.
 
 In order to make easier the deployment of the all stack, a bash script is provided. Make sure `deployment.sh` is executable using `chmod +x deployment.sh` command. To execute it `/bin/bash deployment.sh`
 
+### Grafana add datasource
+
 ![Data Source](screenshots/data_source.png)
+
+### Grafana Influxdb query
+
 ![Data Source](screenshots/query.png)
+
+### Grafana ping and tcp dashboard
+
 ![Data Source](screenshots/dashboard.png)
