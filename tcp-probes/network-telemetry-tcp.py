@@ -11,7 +11,7 @@ def threadPing():
         threadPing.append(threadTargets)
 
 def ping(target, port):
-    nping = os.popen('sudo nping --tcp -c 1 --dest-port {} {}'.format(port,target))
+    nping = os.popen('nping --tcp -c 1 --dest-port {} {}'.format(port,target))
     npingRead = nping.read()
     for i in npingRead.splitlines():
         if 'SENT' in i:
