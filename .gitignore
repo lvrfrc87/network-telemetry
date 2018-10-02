@@ -1,3 +1,6 @@
 influxdb/data
 influxdb/meta
 influxdb/wal
+grafana/sessions
+grafana/db
+tcp-probes/network-telemetry-tcp-beta.py
