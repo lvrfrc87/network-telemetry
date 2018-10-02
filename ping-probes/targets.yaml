@@ -1,8 +1,10 @@
 ---
-  facebook.com: 443
-  google.com: 443
-  ansa.it: 80
-  youtube.com: 443
-  barclays.co.uk: 443
-  rightmove.co.uk: 443
-  wikipedia.jp: 443
+  targets:
+    - facebook.com
+    - google.com
+    - ansa.it
+    - youtube.com
+    - barclays.co.uk
+    - rightmove.co.uk
+    - wikipedia.jp
+    - yahoo.co.uk
