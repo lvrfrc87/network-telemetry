@@ -16,9 +16,11 @@ docker run -d --name=grafana --link db -p 3000:3000 \
        grafana/grafana
 
 # BUILD PING PROBE CONTAINER AND LINK TO DB
+docker rm -f ping
 docker build ping-probes/ -t network-telemetry-ping:latest
 docker run -d --name=ping --link db --restart=always network-telemetry-ping
 
 # BUILD PING PROBE CONTAINER AND LINK TO DB
+docker rm -f tcp
 docker build tcp-probes/ -t network-telemetry-tcp:latest
 docker run -d --name=tcp --link db --restart=always network-telemetry-tcp
