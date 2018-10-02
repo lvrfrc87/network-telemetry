@@ -17,7 +17,7 @@
   "measurement": "rtt_tcp_rcvd",
   "orderByTime": "ASC",
   "policy": "default",
-  "refId": "E",
+  "refId": "G",
   "resultFormat": "time_series",
   "select": [
     [
@@ -37,7 +37,7 @@
     {
       "key": "target",
       "operator": "=",
-      "value": "yahoo.com"
+      "value": "ansa.it"
     }
   ]
 },
@@ -60,7 +60,7 @@
   "measurement": "rtt_tcp_sent",
   "orderByTime": "ASC",
   "policy": "default",
-  "refId": "F",
+  "refId": "H",
   "resultFormat": "time_series",
   "select": [
     [
@@ -80,7 +80,7 @@
     {
       "key": "target",
       "operator": "=",
-      "value": "yahoo.com"
+      "value": "ansa.it"
     }
   ]
 }
