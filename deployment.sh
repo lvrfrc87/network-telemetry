@@ -9,7 +9,11 @@ docker run --name db -d \
       influxdb
 
 # RUN GRAFANA AND LINK TO DB
-docker run -d --name=grafana --link db -p 3000:3000 -v $PWD/grafana:/var/lib/grafana grafana/grafana
+docker run -d --name=grafana --link db -p 3000:3000 \
+       -v $PWD/grafana/database:/var/lib/grafana \
+       -v $PWD/grafana/dashboards:/etc/grafana/provisioning/dashboards \
+       -v $PWD/grafana/json:/var/lib/grafana/dashboards \
+       grafana/grafana
 
 # BUILD PING PROBE CONTAINER AND LINK TO DB
 docker build ping-probes/ -t network-telemetry-ping:latest
