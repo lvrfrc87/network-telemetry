@@ -1,0 +1,43 @@
+{
+  "alias": "yahoo.com",
+  "groupBy": [
+    {
+      "params": [
+        "$__interval"
+      ],
+      "type": "time"
+    },
+    {
+      "params": [
+        "null"
+      ],
+      "type": "fill"
+    }
+  ],
+  "measurement": "ping_rtt",
+  "orderByTime": "ASC",
+  "policy": "default",
+  "refId": "C",
+  "resultFormat": "time_series",
+  "select": [
+    [
+      {
+        "params": [
+          "value"
+        ],
+        "type": "field"
+      },
+      {
+        "params": [],
+        "type": "mean"
+      }
+    ]
+  ],
+  "tags": [
+    {
+      "key": "target",
+      "operator": "=",
+      "value": "yahoo.com"
+    }
+  ]
+}
