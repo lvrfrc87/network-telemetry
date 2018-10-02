@@ -144,13 +144,58 @@ def yahoo():
                 client.write_points(jsonBodyRtt)
         time.sleep(2)
 
+def ansa():
+    while True:
+        nping = os.popen('nping --tcp -c 1 --dest-port 80 www.ansa.it')
+        npingRead = nping.read()
+        for i in npingRead.splitlines():
+            if 'SENT' in i:
+                rttTime = reTime.search(i)
+                value = float(rttTime.group())
+                if value:
+                    pass
+                else:
+                    value = float(0.000)
+                jsonBodyRtt = [
+                 {
+                     "measurement": "rtt_tcp_sent",
+                     "tags": {
+                         "target": "ansa.it",
+                     },
+                     "time": str(datetime.datetime.today()),
+                     "fields": {
+                         "value": value
+                     }
+                 }
+                ]
+                client.write_points(jsonBodyRtt)
+            elif 'RCVD' in i:
+                rttTime = reTime.search(i)
+                value = float(rttTime.group())
+                if value:
+                    pass
+                else:
+                    value = float(0.000)
+                jsonBodyRtt = [
+                 {
+                     "measurement": "rtt_tcp_rcvd",
+                     "tags": {
+                         "target": "ansa.it",
+                     },
+                     "time": str(datetime.datetime.today()),
+                     "fields": {
+                         "value": value
+                     }
+                 }
+                ]
+                client.write_points(jsonBodyRtt)
+        time.sleep(2)
+
 if __name__ == '__main__':
     reTime = re.compile(r'(\d+\.\d+)')
     influx = credPass()
     client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='network_telemetry')
-    fbDef = threading.Thread(name='facebook', target=facebook)
-    glDef = threading.Thread(name='google', target=google)
-    yhDef = threading.Thread(name='yahoo', target=yahoo)
-    fbDef.start()
-    glDef.start()
-    yhDef.start()
+    threading.Thread(name='facebook', target=facebook).start()
+    threading.Thread(name='google', target=google).start()
+    threading.Thread(name='yahoo', target=yahoo).start()
+    threading.Thread(name='ansa', target=ansa).start()
