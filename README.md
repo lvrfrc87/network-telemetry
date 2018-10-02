@@ -4,7 +4,7 @@ Network telemetry tool based on ping RTT and tcp SYN, SYN/ACK RTT. Python is use
 
 Each probe, Influxdb and Grafana run in docker containers linked between each other.
 
-The python code can be customized adding new functions that include new targets. Multithreading is used in order to run the probes in parallel and do not add delay between each function execution. Because of that, I suggest to do not run more than 5 threads at the same time (Max number thread = or < number of cores). Docker file are provided for each probe.
+The targets can be updated on `targets.yaml` file following the classic yaml dictionary structure.
 
 Influxdb container will mount the database storage under `$PWD/influxdb` and will use a custom config file copied from `$PWD/influxdb/config/influxdb.conf`. Logs for Influxdb are in part disabled and raised to `error` level. That was necessary due to log verbosity that fill the disk space in few days.
 

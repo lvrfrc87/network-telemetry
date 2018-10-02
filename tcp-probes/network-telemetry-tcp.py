@@ -33,7 +33,7 @@ def ping(target, port):
                  }
              }
             ]
-            print(jsonBodyRtt)
+            client.write_points(jsonBodyRtt)
         elif 'RCVD' in i:
             rttTime = reTime.search(i)
             value = float(rttTime.group())
@@ -53,7 +53,7 @@ def ping(target, port):
                  }
              }
             ]
-            print(jsonBodyRtt)
+            client.write_points(jsonBodyRtt)
 
 if __name__ == '__main__':
     dicTargets = yaml.load(open('/var/targets.yaml', 'rb'))
