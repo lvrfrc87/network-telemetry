@@ -4,11 +4,11 @@ from influxdb import InfluxDBClient
 from credPass import credPass
 
 def threadTcp():
-    threadTcp = []
+    tcp = []
     for target,port in dicTargets.items():
         threadTargets = threading.Thread(target=tcp, args=(target,port))
         threadTargets.start()
-        threadPTcp.append(threadTargets)
+        tcp.append(threadTargets)
 
 def tcp(target, port):
     nping = os.popen('nping --tcp -c 1 --dest-port {} {}'.format(port,target))
