@@ -3,14 +3,14 @@ import os, re, datetime, time, threading, yaml
 from influxdb import InfluxDBClient
 from credPass import credPass
 
-def threadPing():
-    threadPing = []
+def threadTcp():
+    threadTcp = []
     for target,port in dicTargets.items():
-        threadTargets = threading.Thread(target=ping, args=(target,port))
+        threadTargets = threading.Thread(target=tcp, args=(target,port))
         threadTargets.start()
-        threadPing.append(threadTargets)
+        threadPTcp.append(threadTargets)
 
-def ping(target, port):
+def tcp(target, port):
     nping = os.popen('nping --tcp -c 1 --dest-port {} {}'.format(port,target))
     npingRead = nping.read()
     for i in npingRead.splitlines():
@@ -61,5 +61,5 @@ if __name__ == '__main__':
     influx = credPass()
     client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='network_telemetry')
     while True:
-        threadPing()
+        threadTcp()
         time.sleep(3)
