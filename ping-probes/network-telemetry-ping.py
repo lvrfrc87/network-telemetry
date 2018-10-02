@@ -5,7 +5,7 @@ from credPass import credPass
 
 def facebook():
     while True:
-        ping = os.popen("ping -c 1 facebook.com")
+        ping = os.popen("ping -c 1 www.facebook.com")
         rtt = rttTime.search(ping.read())
         if rtt:
             value = float(rtt.group(2))
@@ -28,7 +28,7 @@ def facebook():
 
 def google():
     while True:
-        ping = os.popen("ping -c 1 google.com")
+        ping = os.popen("ping -c 1 www.google.com")
         rtt = rttTime.search(ping.read())
         if rtt:
             value = float(rtt.group(2))

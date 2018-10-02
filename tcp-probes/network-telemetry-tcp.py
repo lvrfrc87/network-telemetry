@@ -5,7 +5,7 @@ from credPass import credPass
 
 def facebook():
     while True:
-        nping = os.popen('nping --tcp -c 1 --dest-port 443 facebook.com')
+        nping = os.popen('nping --tcp -c 1 --dest-port 443 www.facebook.com')
         npingRead = nping.read()
         for i in npingRead.splitlines():
             if 'SENT' in i:
@@ -52,7 +52,7 @@ def facebook():
 
 def google():
     while True:
-        nping = os.popen('nping --tcp -c 1 --dest-port 443 google.com')
+        nping = os.popen('nping --tcp -c 1 --dest-port 443 www.google.com')
         npingRead = nping.read()
         for i in npingRead.splitlines():
             if 'SENT' in i:
