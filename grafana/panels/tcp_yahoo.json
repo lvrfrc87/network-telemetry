@@ -1,0 +1,86 @@
+{
+  "alias": "yahoo_RCVD",
+  "groupBy": [
+    {
+      "params": [
+        "$__interval"
+      ],
+      "type": "time"
+    },
+    {
+      "params": [
+        "null"
+      ],
+      "type": "fill"
+    }
+  ],
+  "measurement": "rtt_tcp_rcvd",
+  "orderByTime": "ASC",
+  "policy": "default",
+  "refId": "E",
+  "resultFormat": "time_series",
+  "select": [
+    [
+      {
+        "params": [
+          "value"
+        ],
+        "type": "field"
+      },
+      {
+        "params": [],
+        "type": "mean"
+      }
+    ]
+  ],
+  "tags": [
+    {
+      "key": "target",
+      "operator": "=",
+      "value": "yahoo.com"
+    }
+  ]
+},
+{
+  "alias": "yahoo_SENT",
+  "groupBy": [
+    {
+      "params": [
+        "$__interval"
+      ],
+      "type": "time"
+    },
+    {
+      "params": [
+        "null"
+      ],
+      "type": "fill"
+    }
+  ],
+  "measurement": "rtt_tcp_sent",
+  "orderByTime": "ASC",
+  "policy": "default",
+  "refId": "F",
+  "resultFormat": "time_series",
+  "select": [
+    [
+      {
+        "params": [
+          "value"
+        ],
+        "type": "field"
+      },
+      {
+        "params": [],
+        "type": "mean"
+      }
+    ]
+  ],
+  "tags": [
+    {
+      "key": "target",
+      "operator": "=",
+      "value": "yahoo.com"
+    }
+  ]
+}
