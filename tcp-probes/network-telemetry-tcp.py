@@ -7,11 +7,11 @@ def threadTcp():
     tcpThreads = []
     for region,dict in dicTargets.items():
         for target,port in dict.items():
-            threadTargets = threading.Thread(target=tcp, args=(target,port))
+            threadTargets = threading.Thread(target=tcp, args=(target,port,region))
             threadTargets.start()
             tcpThreads.append(threadTargets)
 
-def tcp(target, port):
+def tcp(target,port,region):
     nping = os.popen('nping --tcp -c 1 --dest-port {} {}'.format(port,target))
     npingRead = nping.read()
     for i in npingRead.splitlines():
@@ -35,7 +35,7 @@ def tcp(target, port):
                  }
              }
             ]
-            print(jsonBodyRtt)
+            client.write_points(jsonBodyRtt)
         elif 'RCVD' in i:
             rttTime = reTime.search(i)
             value = float(rttTime.group())
@@ -48,6 +48,7 @@ def tcp(target, port):
                  "measurement": "rtt_tcp_rcvd",
                  "tags": {
                      "target": target,
+                     "region": region
                  },
                  "time": str(datetime.datetime.today()),
                  "fields": {
