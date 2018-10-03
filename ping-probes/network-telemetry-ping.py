@@ -34,7 +34,7 @@ def ping(region,target):
     client.write_points(jsonBody)
 
 if __name__ == '__main__':
-    dicTargets = yaml.load(open('targets.yaml', 'rb'))
+    dicTargets = yaml.load(open('/var/targets.yaml', 'rb'))
     rttTime = re.compile(r'(time=)(\d+\.\d+)')
     influx = credPass()
     client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='network_telemetry')
