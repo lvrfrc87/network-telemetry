@@ -1,9 +1,9 @@
 ---
   eu-east-1a:
     - facebook.com
-    # - google.com
-    # - youtube.com
-    # - yahoo.co.uk
-    # - openrent.co.uk
-    # - amazon.co.uk
-    # - ticketmaster.co.uk
+    - google.com
+    - youtube.com
+    - yahoo.co.uk
+    - openrent.co.uk
+    - amazon.co.uk
+    - ticketmaster.co.uk
