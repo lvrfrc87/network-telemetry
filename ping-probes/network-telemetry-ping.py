@@ -12,6 +12,9 @@ def threadPing():
             pingThreads.append(threadTargets)
 
 def ping(region,target):
+    influx = credPass()
+    client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='network_telemetry')
+    rttTime = re.compile(r'(time=)(\d+\.\d+)')
     ping = os.popen("ping -c 1 {}".format(target))
     rtt = rttTime.search(ping.read())
     if rtt:
@@ -34,10 +37,7 @@ def ping(region,target):
     client.write_points(jsonBody)
 
 if __name__ == '__main__':
-    dicTargets = yaml.load(open('/var/targets.yaml', 'rb'))
-    rttTime = re.compile(r'(time=)(\d+\.\d+)')
-    influx = credPass()
-    client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='network_telemetry')
+    dicTargets = yaml.load(open('var/targets.yaml', 'rb'))
     while True:
         threadPing()
         time.sleep(3)

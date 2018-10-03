@@ -24,3 +24,6 @@ docker run -d --name=ping --link db --restart=always network-telemetry-ping
 docker rm -f tcp
 docker build tcp-probes/ -t network-telemetry-tcp:latest
 docker run -d --name=tcp --link db --restart=always network-telemetry-tcp
+
+# GRAFANA PROVISIONING
+python3 $PWD/ping-probes/dashboard-provisioning.py
