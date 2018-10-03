@@ -5,10 +5,11 @@ from credPass import credPass
 
 def threadTcp():
     tcpThreads = []
-    for target,port in dicTargets.items():
-        threadTargets = threading.Thread(target=tcp, args=(target,port))
-        threadTargets.start()
-        tcpThreads.append(threadTargets)
+    for region,dict in dicTargets.items():
+        for target,port in dict.items():
+            threadTargets = threading.Thread(target=tcp, args=(target,port))
+            threadTargets.start()
+            tcpThreads.append(threadTargets)
 
 def tcp(target, port):
     nping = os.popen('nping --tcp -c 1 --dest-port {} {}'.format(port,target))
@@ -26,6 +27,7 @@ def tcp(target, port):
                  "measurement": "rtt_tcp_sent",
                  "tags": {
                      "target": target,
+                     "region": region
                  },
                  "time": str(datetime.datetime.today()),
                  "fields": {
@@ -33,7 +35,7 @@ def tcp(target, port):
                  }
              }
             ]
-            client.write_points(jsonBodyRtt)
+            print(jsonBodyRtt)
         elif 'RCVD' in i:
             rttTime = reTime.search(i)
             value = float(rttTime.group())
