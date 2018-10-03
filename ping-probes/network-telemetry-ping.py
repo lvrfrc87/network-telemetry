@@ -5,12 +5,13 @@ from credPass import credPass
 
 def threadPing():
     pingThreads = []
-    for i in dicTargets['targets']:
-        threadTargets = threading.Thread(target=ping, args=(i,))
-        threadTargets.start()
-        pingThreads.append(threadTargets)
+    for region,list in dicTargets.items():
+        for target in list:
+            threadTargets = threading.Thread(target=ping, args=(region,target))
+            threadTargets.start()
+            pingThreads.append(threadTargets)
 
-def ping(target):
+def ping(region,target):
     ping = os.popen("ping -c 1 {}".format(target))
     rtt = rttTime.search(ping.read())
     if rtt:
@@ -22,6 +23,7 @@ def ping(target):
          "measurement": "ping_rtt",
          "tags": {
              "target": target,
+             "region": region
          },
          "time": str(datetime.datetime.today()),
          "fields": {
@@ -32,7 +34,7 @@ def ping(target):
     client.write_points(jsonBody)
 
 if __name__ == '__main__':
-    dicTargets = yaml.load(open('/var/targets.yaml', 'rb'))
+    dicTargets = yaml.load(open('targets.yaml', 'rb'))
     rttTime = re.compile(r'(time=)(\d+\.\d+)')
     influx = credPass()
     client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='network_telemetry')
