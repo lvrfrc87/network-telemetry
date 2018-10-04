@@ -87,7 +87,7 @@
       {% for region, list in yamlVar.items() -%}
       {% for target in list -%}
         {
-          "alias": "{{ target }}",
+          "alias": "{{ target }}_RCVD",
           "groupBy": [
             {
               "params": [
@@ -102,7 +102,50 @@
               "type": "fill"
             }
           ],
-          "measurement": "ping_rtt",
+          "measurement": "rtt_tcp_rcvd",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "{{ range(1, 100) | random }}",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "{{ target }}"
+            }
+          ]
+        },
+        {
+          "alias": "{{ target }}_SENT",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_sent",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "{{ range(1, 100) | random }}",
@@ -138,7 +181,7 @@
       "timeFrom": null,
       "timeShift": null,
       {% for region, list in yamlVar.items() -%}
-      "title": "PING",
+      "title": "TCP",
       {% endfor -%}
       "tooltip": {
         "shared": true,
@@ -214,7 +257,7 @@
   },
   "timezone": "browser",
   {% for region, list in yamlVar.items() -%}
-  "title": "{{region}}-ping",
+  "title": "{{region}}-tcp",
   {% endfor -%}
   "uid": "{{ range(1, 999999999) | random }}",
   "version": 1

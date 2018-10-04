@@ -27,3 +27,4 @@ docker run -d --name=tcp --link db --restart=always network-telemetry-tcp
 
 # GRAFANA PROVISIONING
 python3 $PWD/ping-probes/dashboard-provisioning.py
+python3 $PWD/tcp-probes/dashboard-provisioning.py

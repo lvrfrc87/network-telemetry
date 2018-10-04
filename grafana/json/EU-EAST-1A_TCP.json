@@ -85,7 +85,7 @@
       "steppedLine": false,
       "targets": [
       {
-          "alias": "www.facebook.com",
+          "alias": "facebook.com_RCVD",
           "groupBy": [
             {
               "params": [
@@ -100,10 +100,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "ping_rtt",
+          "measurement": "rtt_tcp_rcvd",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "5",
+          "refId": "92",
           "resultFormat": "time_series",
           "select": [
             [
@@ -123,13 +123,12 @@
             {
               "key": "target",
               "operator": "=",
-              "value": "www.facebook.com"
+              "value": "facebook.com"
             }
           ]
-        }
-      ,
-      {
-          "alias": "www.google.com",
+        },
+        {
+          "alias": "facebook.com_SENT",
           "groupBy": [
             {
               "params": [
@@ -144,10 +143,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "ping_rtt",
+          "measurement": "rtt_tcp_sent",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "39",
+          "refId": "76",
           "resultFormat": "time_series",
           "select": [
             [
@@ -167,13 +166,13 @@
             {
               "key": "target",
               "operator": "=",
-              "value": "www.google.com"
+              "value": "facebook.com"
             }
           ]
         }
       ,
       {
-          "alias": "www.youtube.com",
+          "alias": "google.com_RCVD",
           "groupBy": [
             {
               "params": [
@@ -188,7 +187,485 @@
               "type": "fill"
             }
           ],
-          "measurement": "ping_rtt",
+          "measurement": "rtt_tcp_rcvd",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "66",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "google.com"
+            }
+          ]
+        },
+        {
+          "alias": "google.com_SENT",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_sent",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "30",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "google.com"
+            }
+          ]
+        }
+      ,
+      {
+          "alias": "ansa.it_RCVD",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_rcvd",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "43",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "ansa.it"
+            }
+          ]
+        },
+        {
+          "alias": "ansa.it_SENT",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_sent",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "90",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "ansa.it"
+            }
+          ]
+        }
+      ,
+      {
+          "alias": "youtube.com_RCVD",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_rcvd",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "14",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "youtube.com"
+            }
+          ]
+        },
+        {
+          "alias": "youtube.com_SENT",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_sent",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "58",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "youtube.com"
+            }
+          ]
+        }
+      ,
+      {
+          "alias": "barclays.co.uk_RCVD",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_rcvd",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "62",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "barclays.co.uk"
+            }
+          ]
+        },
+        {
+          "alias": "barclays.co.uk_SENT",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_sent",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "7",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "barclays.co.uk"
+            }
+          ]
+        }
+      ,
+      {
+          "alias": "rightmove.co.uk_RCVD",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_rcvd",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "51",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "rightmove.co.uk"
+            }
+          ]
+        },
+        {
+          "alias": "rightmove.co.uk_SENT",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_sent",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "12",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "rightmove.co.uk"
+            }
+          ]
+        }
+      ,
+      {
+          "alias": "wikipedia.jp_RCVD",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_rcvd",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "36",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "target",
+              "operator": "=",
+              "value": "wikipedia.jp"
+            }
+          ]
+        },
+        {
+          "alias": "wikipedia.jp_SENT",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rtt_tcp_sent",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "34",
@@ -211,183 +688,7 @@
             {
               "key": "target",
               "operator": "=",
-              "value": "www.youtube.com"
-            }
-          ]
-        }
-      ,
-      {
-          "alias": "www.yahoo.co.uk",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping_rtt",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "20",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "target",
-              "operator": "=",
-              "value": "www.yahoo.co.uk"
-            }
-          ]
-        }
-      ,
-      {
-          "alias": "www.openrent.co.uk",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping_rtt",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "22",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "target",
-              "operator": "=",
-              "value": "www.openrent.co.uk"
-            }
-          ]
-        }
-      ,
-      {
-          "alias": "www.amazon.co.uk",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping_rtt",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "60",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "target",
-              "operator": "=",
-              "value": "www.amazon.co.uk"
-            }
-          ]
-        }
-      ,
-      {
-          "alias": "www.ticketmaster.co.uk",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping_rtt",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "77",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "target",
-              "operator": "=",
-              "value": "www.ticketmaster.co.uk"
+              "value": "wikipedia.jp"
             }
           ]
         }
@@ -395,7 +696,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "eu-east-1a",
+      "title": "TCP",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -469,7 +770,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "eu-east-1a",
-  "uid": "559575429",
+  "title": "eu-east-1a-tcp",
+  "uid": "780780298",
   "version": 1
 }
