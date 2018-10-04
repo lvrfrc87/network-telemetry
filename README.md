@@ -4,13 +4,14 @@ Network telemetry tool based on ping RTT and tcp SYN, SYN/ACK RTT. Python is use
 
 Each probe, Influxdb and Grafana run in docker containers linked between each other.
 
-The targets can be updated on `targets.yaml` file following the classic yaml dictionary structure.
+The probe targets can be updated on `targets.yaml` file following the classic yaml dictionary structure.
 
 Influxdb container will mount the database storage under `$PWD/influxdb` and will use a custom config file copied from `$PWD/influxdb/config/influxdb.conf`. Logs for Influxdb are in part disabled and raised to `error` level. That was necessary due to log verbosity that fill the disk space in few days.
 
-Grafana is listening to 0.0.0.0:3000 and is the only container exposed to the network. The other containers are linked each other with `--link` option passed on `docker run`. If you want install some plugin, you need to log into the container and install from there. The plugins as well as the dashboard settings are saved on external disk mount under `$PWD/grafana`. Once up and running, Influxdb has to be added as datasource to Grafana.
+Grafana is listening to 0.0.0.0:3000 and is the only container exposed to the network. The other containers are linked each other with `--link` option passed on `docker run`. Few external folders are mapped do Grafana docker. One of these is the plugin folder and if you want install some of them you can do it under `$PWDgrafana/database/plugins`. The dashboard settings are also saved on external unit mount under `$PWD/grafana`. Once up and running, Influxdb has to be added as datasource to Grafana.
+Dashboards are automagically provisioned based on `target.yaml`, via deployment script. You don't need to add manually!!!
 
-In order to make easier the deployment of the all stack, a bash script is provided. Make sure `deployment.sh` is executable using `chmod +x deployment.sh` command. To execute it `/bin/bash deployment.sh`
+In order to make easier the deployment of the all stack, a bash script is provided. Make sure `deployment.sh` is executable using `chmod +x deployment.sh` command. To execute it `/bin/bash deployment.sh`. Later it will be replaced wit git pipeline.
 
 ### Grafana add datasource
 
