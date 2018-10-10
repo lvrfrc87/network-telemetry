@@ -14,15 +14,16 @@ def threadTcp():
 def tcp(target,port,region):
     nping = os.popen('nping --tcp -c 1 --dest-port {} {}'.format(port,target))
     npingRead = nping.read()
+    jsonBody = []
     for i in npingRead.splitlines():
         if 'SENT' in i:
             rttTime = reTime.search(i)
-            value = float(rttTime.group())
-            if value:
+            valueSENT = float(rttTime.group())
+            if valueSENT:
                 pass
             else:
-                value = float(0.000)
-            jsonBodyRtt = [
+                valueSENT = float(0.000)
+            jsonBodyRttSENT = [
              {
                  "measurement": "rtt_tcp_sent",
                  "tags": {
@@ -31,19 +32,19 @@ def tcp(target,port,region):
                  },
                  "time": str(datetime.datetime.today()),
                  "fields": {
-                     "value": value
+                     "value": valueSENT
                  }
              }
             ]
-            client.write_points(jsonBodyRtt)
+            jsonBody.append(jsonBodyRttSENT)
         elif 'RCVD' in i:
             rttTime = reTime.search(i)
-            value = float(rttTime.group())
-            if value:
+            valueRCVD = float(rttTime.group())
+            if valueRCVD:
                 pass
             else:
-                value = float(0.000)
-            jsonBodyRtt = [
+                valueRCVD = float(0.000)
+            jsonBodyRttRCVD = [
              {
                  "measurement": "rtt_tcp_rcvd",
                  "tags": {
@@ -52,17 +53,26 @@ def tcp(target,port,region):
                  },
                  "time": str(datetime.datetime.today()),
                  "fields": {
-                     "value": value
+                     "value": valueRCVD
                  }
              }
             ]
-            client.write_points(jsonBodyRtt)
+            jsonBody.append(jsonBodyRttRCVD)
+        for client in dbList:
+            try:
+                connect = InfluxDBClient(host=client, port=8086, username=influx.load(client,'username'), password=influx.load(client,'password'), database='network_telemetry')
+                for json in jsonBody:
+                    connect.write_points(json)
+            except:
+                pass
 
 if __name__ == '__main__':
-    dicTargets = yaml.load(open('/var/targets.yaml', 'rb'))
+    dicTargets = yaml.load(open('var/targets.yaml', 'rb'))
     reTime = re.compile(r'(\d+\.\d+)')
     influx = credPass()
-    client = InfluxDBClient(host='db', port=8086, username=influx.load('influxdb','username'), password=influx.load('influxdb','password'), database='network_telemetry')
+    # Add DB hostname/IP to dbList in case you want send result to more than one DB.
+    # Remember to update .credential.json with DBs login.
+    dbList = ['db']
     while True:
         threadTcp()
-        time.sleep(3)
+        time.sleep(5)
