@@ -46,4 +46,4 @@ syntax_check:
   - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' ping-probes/*.py
   # - jsonlint tcp-probes/*.json
   - jsonlint ping-probes/.credentials.json
-  - hadolint Dockerfile
+  - ./hadolint Dockerfile
