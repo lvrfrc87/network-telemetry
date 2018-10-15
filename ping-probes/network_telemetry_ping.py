@@ -8,11 +8,11 @@ import datetime
 import time
 import threading
 import yaml
-from influxdb import InfluxDBClient
 from credPass import credPass
 from urllib3.exceptions import NewConnectionError
 from urllib3.exceptions import MaxRetryError
 from requests.exceptions import ConnectionError as ApiCallError
+from influxdb import InfluxDBClient
 
 def thread_ping():
     ''' multithreading ping probes '''
