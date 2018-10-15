@@ -40,10 +40,10 @@ syntax_check:
   - syntax_check
   script:
   - source telemetry/bin/activate
-  - yamllint tcp-probes/var/
+  # - yamllint tcp-probes/var/
   - yamllint ping-probes/var/
+  # - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' tcp-probes/*.py
   - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' ping-probes/*.py
-  - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' tcp-probes/*.py
+  # - jsonlint tcp-probes/*.json
   - jsonlint ping-probes/*.json
-  - jsonlint tcp-probes/*.json
   - hadolint Dockerfile
