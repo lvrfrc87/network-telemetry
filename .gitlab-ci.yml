@@ -2,36 +2,40 @@ stages:
   - build_env
   - syntax_check
 
-variables:
-  ECRHOST: "889199535989.dkr.ecr.us-east-1.amazonaws.com"
-  SHORT_REPOSITORY: "nee/ping-prem-ams"
-  REPOSITORY: "$ECRHOST/$SHORT_REPOSITORY"
-
 cache:
   paths:
     - telemetry/
   policy: pull-push
 
-build:
+update local cache and install pip3:
   stage: build_env
-  tags:
-  - build_env
+  tag: build_env_1
   script:
   - sudo apt-get update && sudo apt-get upgrade -y
   - sudo apt-get install python3-pip -y
   - sudo pip3 install --upgrade pip
+
+install virtualenv and activate it:
+  stage: build_env
+  tag: build_env_2
+  script:
   - sudo pip3 install virtualenv
   - virtualenv telemetry
   - source telemetry/bin/activate
-  - sudo apt-get install npm -y
+
+install dependencies:
+  stage: build_env
+  tag: build_env_3
+  script:
   - sudo pip3 install yamllint
   - sudo pip3 install pylint
   - sudo pip3 install jinja2
   - sudo pip3 install credPass
   - sudo pip3 install influxdb
+  - sudo apt-get install npm -y
   - sudo apt-get install nodejs-legacy -y
   - sudo npm install jsonlint -g
-  - deactivate
+  - sudo wget https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64 -o hadolint && chmod +x hadolint
 
 syntax_check:
   stage: syntax_check
@@ -45,5 +49,4 @@ syntax_check:
   - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' ping-probes/*.py
   # - jsonlint tcp-probes/*.json
   - jsonlint ping-probes/.credentials.json
-  - wget https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64 -o hadolint && chmod +x hadolint
   - hadolint Dockerfile
