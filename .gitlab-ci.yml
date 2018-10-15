@@ -17,20 +17,20 @@ build:
   tags:
   - build_env
   script:
-  - sudo apt-get update && sudo apt-get upgrade -y
-  - sudo apt-get install python3-pip -y
-  - sudo pip3 install --upgrade pip
-  - sudo pip3 install virtualenv
+  - apt-get update && apt-get upgrade -y
+  - apt-get install python3-pip -y
+  - pip3 install --upgrade pip
+  - pip3 install virtualenv
   - virtualenv telemetry
   - source telemetry/bin/activate
-  - sudo apt-get install npm -y
-  - sudo pip3 install yamllint
-  - sudo pip3 install pylint
-  - sudo pip3 install jinja2
-  - sudo pip3 install credPass
-  - sudo pip3 install influxdb
-  - sudo apt-get install npm -y
-  - sudo npm install jsonlint -g
+  - apt-get install npm -y
+  - pip3 install yamllint
+  - pip3 install pylint
+  - pip3 install jinja2
+  - pip3 install credPass
+  - pip3 install influxdb
+  - apt-get install npm -y
+  - npm install jsonlint -g
   - wget https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64 -o hadolint && chmod +x hadolint
   - deactivate
 
