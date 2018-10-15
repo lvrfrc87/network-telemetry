@@ -26,7 +26,6 @@ build_environment:
   - sudo apt-get install npm -y
   - sudo apt-get install nodejs-legacy -y
   - sudo npm install jsonlint -g
-  - sudo wget https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64 -o hadolint && sudo chmod +x hadolint
 
 syntax_check:
   stage: syntax_check
@@ -40,4 +39,5 @@ syntax_check:
   - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' ping-probes/*.py
   # - jsonlint tcp-probes/*.json
   - jsonlint ping-probes/.credentials.json
+  - sudo wget https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64 -o hadolint && sudo chmod +x hadolint
   - ./hadolint Dockerfile
