@@ -1,9 +1,9 @@
 ---
-  eu-east-1a:
-    facebook.com: 443
-    google.com: 443
-    ansa.it: 80
-    youtube.com: 443
-    barclays.co.uk: 443
-    rightmove.co.uk: 443
-    wikipedia.jp: 443
+eu-east-1a:
+  facebook.com: 443
+  google.com: 443
+  ansa.it: 80
+  youtube.com: 443
+  barclays.co.uk: 443
+  rightmove.co.uk: 443
+  wikipedia.jp: 443
