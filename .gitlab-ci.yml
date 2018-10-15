@@ -9,8 +9,6 @@ cache:
 
 update local cache and install pip3:
   stage: build_env
-  tags:
-  - build_env_1
   script:
   - sudo apt-get update && sudo apt-get upgrade -y
   - sudo apt-get install python3-pip -y
@@ -18,8 +16,6 @@ update local cache and install pip3:
 
 install virtualenv and activate it:
   stage: build_env
-  tags:
-  - build_env_2
   script:
   - sudo pip3 install virtualenv
   - virtualenv telemetry
@@ -27,8 +23,6 @@ install virtualenv and activate it:
 
 install dependencies:
   stage: build_env
-  tags:
-  - build_env_3
   script:
   - sudo pip3 install yamllint
   - sudo pip3 install pylint
