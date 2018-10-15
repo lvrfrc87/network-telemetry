@@ -7,23 +7,17 @@ cache:
     - telemetry/
   policy: pull-push
 
-update local cache and install pip3:
+build_environment:
   stage: build_env
+  tags:
+  - build_env
   script:
   - sudo apt-get update && sudo apt-get upgrade -y
   - sudo apt-get install python3-pip -y
   - sudo pip3 install --upgrade pip
-
-install virtualenv and activate it:
-  stage: build_env
-  script:
   - sudo pip3 install virtualenv
   - virtualenv telemetry
   - source telemetry/bin/activate
-
-install dependencies:
-  stage: build_env
-  script:
   - sudo pip3 install yamllint
   - sudo pip3 install pylint
   - sudo pip3 install jinja2
