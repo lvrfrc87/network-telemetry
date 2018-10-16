@@ -35,7 +35,7 @@ def ping_probe(region, target):
         {
             "measurement": "ping_rtt",
             "tags": {
-                "host": target,
+                "target": target,
                 "region": region},
             "time": str(datetime.datetime.today()),
             "fields": {

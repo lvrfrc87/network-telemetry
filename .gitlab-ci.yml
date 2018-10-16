@@ -30,10 +30,10 @@ python:
   - sudo pip3 install credPass
   - sudo pip3 install influxdb
   - sudo pip3 install pylint
-  - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' ping-probes/network_telemetry_ping.py
-  - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' ping-probes/dashboard_provisioning.py
-  - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' tcp-probes/network_telemetry_ping.py
-  - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' tcp-probes/dashboard_provisioning.py
+  - pylint --disable=too-many-locals --disable=invalid-name ping-probes/network_telemetry_ping.py
+  - pylint --disable=too-many-locals --disable=invalid-name ping-probes/dashboard_provisioning.py
+  - pylint --disable=too-many-locals --disable=invalid-name tcp-probes/network_telemetry_ping.py
+  - pylint --disable=too-many-locals --disable=invalid-name tcp-probes/dashboard_provisioning.py
 
 yaml:
   stage: syntax_check
@@ -54,7 +54,6 @@ json:
   - sudo npm install jsonlint -g
   - jsonlint ping-probes/.credentials.json
   - jsonlint tcp-probes/.credentials.json
-  - jsonlint /grafana/json/*
 
 Dockerfile:
   stage: syntax_check
