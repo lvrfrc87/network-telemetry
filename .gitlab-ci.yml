@@ -78,8 +78,8 @@ docker build:
   - sudo apt-get update && sudo apt-get install docker-ce -y
   - echo $DOCKER_PASSWORD | sudo docker login -u=federico87 --password-stdin
   - sudo docker build ping-probes/ -t tcpnetwork_telemetry_ping:latest
-  - sudo docker tag my_image $DOCKER_ID_USER/network_telemetry_ping
-  - sudo docker push $DOCKER_ID_USER/tcpnetwork_telemetry_ping
+  - sudo docker tag network_telemetry_ping Federico87/network_telemetry_ping
+  - sudo docker push Federico87/network_telemetry_ping
   - sudo docker build tcp-probes/ -t network_telemetry_tcp:latest
-  - sudo docker tag my_image $DOCKER_ID_USER/network_telemetry_tcp
-  - sudo docker push $DOCKER_ID_USER/network_telemetry_tcp
+  - sudo docker tag network_telemetry_tcp Federico87/network_telemetry_tcp
+  - sudo docker push Federico87/network_telemetry_tcp
