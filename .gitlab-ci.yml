@@ -32,8 +32,8 @@ python:
   - sudo pip3 install pylint
   - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' ping-probes/network_telemetry_ping.py
   - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' ping-probes/dashboard_provisioning.py
-
-  # - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' tcp-probes/*.py
+  - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' tcp-probes/network_telemetry_ping.py
+  - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' tcp-probes/dashboard_provisioning.py
 
 yaml:
   stage: syntax_check
@@ -42,7 +42,7 @@ yaml:
   script:
   - sudo pip3 install yamllint
   - yamllint ping-probes/var/targets.yaml
-  # - yamllint tcp-probes/var/*.yaml
+  - yamllint tcp-probes/var/targets.yaml
 
 json:
   stage: syntax_check
@@ -53,10 +53,8 @@ json:
   - sudo apt-get install npm -y
   - sudo npm install jsonlint -g
   - jsonlint ping-probes/.credentials.json
-  - jsonlint ping-probes/var/dashboard_template.j2
-  # - jsonlint tcp-probes/*.json
-  # - jsonlint tcp-probes/var/*.json
-
+  - jsonlint tcp-probes/.credentials.json
+  - jsonlint /grafana/json/*
 
 Dockerfile:
   stage: syntax_check
