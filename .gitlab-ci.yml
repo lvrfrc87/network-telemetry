@@ -76,7 +76,7 @@ docker build:
   - sudo apt-key fingerprint 0EBFCD88
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
   - sudo apt-get update && sudo apt-get install docker-ce -y
-  - sudo docker login -u="$DOCKER_USERNAME" --password-stdin="$DOCKER_PASSWORD"
+  - sudo docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - sudo docker build ping-probes/ -t network-telemetry-ping:latest
   - sudo docker tag my_image $DOCKER_ID_USER/network-telemetry-ping
   - sudo docker push $DOCKER_ID_USER/network-telemetry-ping
