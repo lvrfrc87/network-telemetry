@@ -32,7 +32,7 @@ python:
   - sudo pip3 install pylint
   - pylint --disable=too-many-locals --disable=invalid-name ping-probes/network_telemetry_ping.py
   - pylint --disable=too-many-locals --disable=invalid-name ping-probes/dashboard_provisioning.py
-  - pylint --disable=too-many-locals --disable=invalid-name tcp-probes/network_telemetry_ping.py
+  - pylint --disable=too-many-locals --disable=invalid-name tcp-probes/network_telemetry_tcp.py
   - pylint --disable=too-many-locals --disable=invalid-name tcp-probes/dashboard_provisioning.py
 
 yaml:
@@ -62,4 +62,5 @@ Dockerfile:
   script:
   - wget -cO hadolint https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64
   - chmod +x hadolint
-  - ./hadolint Dockerfile
+  - ./hadolint tcp-probes/Dockerfile
+  - ./hadolint ping-probes/Dockerfile
