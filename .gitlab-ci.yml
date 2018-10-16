@@ -1,7 +1,7 @@
 stages:
   - build_env
   - syntax_check
-  - docker_prov
+  - docker_build
   - deployment
 
 cache:
@@ -64,3 +64,17 @@ Dockerfile:
   - chmod +x hadolint
   - ./hadolint tcp-probes/Dockerfile
   - ./hadolint ping-probes/Dockerfile
+
+docker build:
+  stage: docker_build
+  tags:
+  - docker_build
+  script:
+  - sudo apt-get install docker
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker build ping-probes/ -t network-telemetry-ping:latest
+  - docker tag my_image $DOCKER_ID_USER/network-telemetry-ping
+  - docker push $DOCKER_ID_USER/network-telemetry-ping
+  - docker build tcp-probes/ -t network-telemetry-tcp:latest
+  - docker tag my_image $DOCKER_ID_USER/network-telemetry-tcp
+  - docker push $DOCKER_ID_USER/network-telemetry-tcp
