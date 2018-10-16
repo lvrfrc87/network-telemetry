@@ -50,7 +50,6 @@ json:
   - sudo npm install jsonlint -g
   - jsonlint *
 
-
 Dockerfile:
   stage: syntax_check
   tags:
@@ -59,18 +58,3 @@ Dockerfile:
   - wget -cO hadolint https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64
   - chmod +x hadolint
   - ./hadolint *
-
-syntax_check:
-  stage: syntax_check
-  tags:
-  - syntax_check
-  script:
-  - source telemetry/bin/activate
-  # - yamllint tcp-probes/var/
-  - yamllint ping-probes/var/
-  # - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' tcp-probes/*.py
-  - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' ping-probes/*.py
-  # - jsonlint tcp-probes/*.json
-  - jsonlint ping-probes/.credentials.json
-  - sudo wget https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64 -o hadolint && sudo chmod +x hadolint
-  - ./hadolint ping-probes/Dockerfile
