@@ -1,13 +1,15 @@
 stages:
   - build_env
   - syntax_check
+  - docker_prov
+  - deployment
 
 cache:
   paths:
     - telemetry/
   policy: pull-push
 
-build_environment:
+build:
   stage: build_env
   tags:
   - build_env
@@ -18,14 +20,45 @@ build_environment:
   - sudo pip3 install virtualenv
   - virtualenv telemetry
   - source telemetry/bin/activate
-  - sudo pip3 install yamllint
-  - sudo pip3 install pylint
+
+python:
+  stage: syntax_check
+  tags:
+  - syntax_check
+  script:
   - sudo pip3 install jinja2
   - sudo pip3 install credPass
   - sudo pip3 install influxdb
-  - sudo apt-get install npm -y
+  - sudo pip3 install pylint
+  - pylint --const-rgx='[a-z_][a-z0-9_]{2,30}$' *
+
+yaml:
+  stage: syntax_check
+  tags:
+  - syntax_check
+  script:
+  - sudo pip3 install yamllint
+  - yamllint *
+
+json:
+  stage: syntax_check
+  tags:
+  - syntax_check
+  script:
   - sudo apt-get install nodejs-legacy -y
+  - sudo apt-get install npm -y
   - sudo npm install jsonlint -g
+  - jsonlint *
+
+
+Dockerfile:
+  stage: syntax_check
+  tags:
+  - syntax_check
+  script:
+  - wget -cO hadolint https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64
+  - chmod +x hadolint
+  - ./hadolint *
 
 syntax_check:
   stage: syntax_check
