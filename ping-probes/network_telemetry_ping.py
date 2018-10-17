@@ -60,7 +60,7 @@ if __name__ == '__main__':
     # Add DB hostname/IP to db_list in case you want send result to more than one DB.
     # Remember to update .credential.json with DBs login.
     db_list = [
-        'influxdb'
+        'db'
         ]
     while True:
         thread_ping()
