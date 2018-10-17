@@ -2,6 +2,7 @@ stages:
   - build_env
   - syntax_check
   - docker_build
+  - pre_deployment
   - deployment
 
 cache:
@@ -84,21 +85,28 @@ docker build:
   - sudo docker tag network_telemetry_tcp federico87/network_telemetry_tcp
   - sudo docker push federico87/network_telemetry_tcp
 
-remove old containers:
-  stage: deployment
+remove ping container:
+  stage: pre_deployment
   tags:
   - deployment
   script:
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
+  allow_failure: true
+
+remove tcp container:
+  stage: pre_deployment
+  tags:
+  - deployment
+  script:
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
   allow_failure: true
 
-deploy new containers:
+deploy newcontainer:
   stage: deployment
   tags:
   - deployment
   script:
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "python3 $PWD/ping-probes/dashboard-provisioning.py; \
-    python3 $PWD/tcp-probes/dashboard-provisioning.py"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "python3 $PWD/network-telemetry/ping-probes/dashboard-provisioning.py; \
+    python3 $PWD/network-telemetry/tcp-probes/dashboard-provisioning.py"
