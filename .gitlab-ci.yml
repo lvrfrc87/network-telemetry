@@ -90,8 +90,8 @@ deployent:
   - deployment
   script:
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping; \
-    sudo docker run -d --name=ping --link db --restart=always network-telemetry-ping"
+    sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp; \
-    sudo docker run -d --name=tcp --link db --restart=always network-telemetry-tcp"
+    sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "python3 $PWD/ping-probes/dashboard-provisioning.py; \
     python3 $PWD/tcp-probes/dashboard-provisioning.py"
