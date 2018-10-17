@@ -29,7 +29,7 @@ def tcp(target, port, region):
     nping_read = nping.read()
     json_body = []
     for i in nping_read.splitlines():
-        if 'sent' in i:
+        if 'SENT' in i:
             rtt_time = re_time.search(i)
             value_sent = float(rtt_time.group())
             if value_sent:
@@ -48,7 +48,7 @@ def tcp(target, port, region):
                 }
             ]
             json_body.append(json_body_rtt_sent)
-        elif 'rcvd' in i:
+        elif 'RCVD' in i:
             rtt_time = re_time.search(i)
             value_rcvd = float(rtt_time.group())
             if value_rcvd:
