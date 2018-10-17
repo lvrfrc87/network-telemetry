@@ -89,22 +89,11 @@ deployent:
   tags:
   - deployment
   script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "docker run --name db -d \
-        -e INFLUXDB_DB=network_telemetry \
-        -e INFLUXDB_ADMIN_USER=$INFLUXDB_ADMIN_USER -e INFLUXDB_ADMIN_PASSWORD=$INFLUXDB_ADMIN_PASSWORD \
-        -v $PWD/influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
-        -v $PWD/influxdb:/var/lib/influxdb \
-        influxdb"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "docker run -d --name=grafana --link db -p 3000:3000 \
-         -v $PWD/grafana/database:/var/lib/grafana \
-         -v $PWD/grafana/dashboards:/etc/grafana/provisioning/dashboards \
-         -v $PWD/grafana/json:/var/lib/grafana/dashboards \
-         grafana/grafana"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "docker rm -f ping; \
+  - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping; \
         docker build ping-probes/ -t network-telemetry-ping:lates; \
         docker run -d --name=ping --link db --restart=always network-telemetry-ping"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "docker rm -f tcp; \
-        docker build tcp-probes/ -t network-telemetry-tcp:lates; \
-        docker run -d --name=tcp --link db --restart=always network-telemetry-tcp"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp; \
+        sudo docker build tcp-probes/ -t network-telemetry-tcp:lates; \
+        sudo docker run -d --name=tcp --link db --restart=always network-telemetry-tcp"
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "python3 $PWD/ping-probes/dashboard-provisioning.py; \
         python3 $PWD/tcp-probes/dashboard-provisioning.py"
