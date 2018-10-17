@@ -109,3 +109,4 @@ deploy new containers:
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
