@@ -14,7 +14,7 @@ def dashboard():
     template = jinja_env.get_template('tcp-probes/var/dashboard_template.j2')
     for region in dic_targets.keys():
         directory = 'grafana/json/'
-        file = os.path.join(directory + region.upper() + '_tcp' '.json')
+        file = os.path.join(directory + region.upper() + '_TCP' '.json')
         with open(file, 'w+') as dashboard_file:
             dashboard_file.write(template.render(yamlVar=dic_targets))
             dashboard_file.close()
