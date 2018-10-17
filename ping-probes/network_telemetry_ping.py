@@ -57,8 +57,10 @@ if __name__ == '__main__':
     dic_targets = yaml.load(open('var/targets.yaml', 'rb'))
     rtt_time = re.compile(r'(time=)(\d+\.\d+)')
     influx = credPass()
+    # Add DB hostname/IP to db_list in case you want send result to more than one DB.
+    # Remember to update .credential.json with DBs login.
     db_list = [
-        'db'
+        'influxdb'
         ]
     while True:
         thread_ping()

@@ -86,7 +86,7 @@ if __name__ == '__main__':
     influx = credPass()
     # Add DB hostname/IP to db_list in case you want send result to more than one DB.
     # Remember to update .credential.json with DBs login.
-    db_list = ['db']
+    db_list = ['influxdb']
     while True:
         thread_tcp()
         time.sleep(5)
