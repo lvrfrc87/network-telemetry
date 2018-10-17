@@ -91,7 +91,7 @@ deployent:
   script:
   - ssh -i "~/.aws.pem" ec2-user@ec2-35-176-166-172.eu-west-2.compute.amazonaws.com "docker run --name db -d \
         -e INFLUXDB_DB=network_telemetry \
-        -e INFLUXDB_ADMIN_USER=$INFLUXDB_ADMIN_USER -e INFLUXDB_ADMIN_PASSWORD=&INFLUXDB_ADMIN_PASSWORD \
+        -e INFLUXDB_ADMIN_USER=$INFLUXDB_ADMIN_USER -e INFLUXDB_ADMIN_PASSWORD=$INFLUXDB_ADMIN_PASSWORD \
         -v $PWD/influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
         -v $PWD/influxdb:/var/lib/influxdb \
         influxdb"
