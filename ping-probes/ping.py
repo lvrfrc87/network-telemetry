@@ -31,7 +31,8 @@ class Ping():
 
     def run_ping(self):
         """ run ping command and extract values"""
-        ping_cmd = os.popen("ping -c 1 -t 1 {}".format(self.target))
+        # -t option not supported in Alpine
+        ping_cmd = os.popen("ping -c 1 {}".format(self.target))
         regex = re.compile(r'\d+\.?')
         values = ping_cmd.read().split()
         json_body = [
@@ -47,8 +48,9 @@ class Ping():
                     "loss": float(regex.search(values[25]).group()),
                     "min": float(values[31].split("/")[0]),
                     "avg": float(values[31].split("/")[1]),
-                    "max": float(values[31].split("/")[2]),
-                    "stddev": float(values[31].split("/")[3])}
+                    # "stddev": float(values[31].split("/")[3]),
+                    # stddev not supported in Alpine
+                    "max": float(values[31].split("/")[2])}
             }
         ]
         return json_body
