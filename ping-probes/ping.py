@@ -19,27 +19,6 @@ Values extracted in float datat type are:
 6 - Max response time
 7 - Delta between Min and Max response time
 """
-#!/usr/bin/env python3
-"""python class to extract ping values from ping UNIX command
-and returned in json format ready to be written on InfluxDVself.
-Below an utput example:
-
-PING www.google.com (216.58.216.4): 56 data bytes
-64 bytes from 216.58.216.4: icmp_seq=0 ttl=42 time=130.795 ms
-
---- www.google.com ping statistics ---
-1 packets transmitted, 1 packets received, 0.0% packet loss
-round-trip min/avg/max/stddev = 130.795/130.795/130.795/0.000 ms
-
-Values extracted in float datat type are:
-1 - Packet transmitted
-2 - Packet received
-3 - Packet loss
-4 - Min response time
-5 - Average response time
-6 - Max response time
-7 - Delta between Min and Max response time
-"""
 import os
 import datetime
 import re
