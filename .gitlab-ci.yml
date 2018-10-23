@@ -104,7 +104,7 @@ remove tcp container:
   tags:
   - deployment
   script:
-  - ssh -i "~/.aws.pem" ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
   allow_failure: true
 
 deploy new containers:
