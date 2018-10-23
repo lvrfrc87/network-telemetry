@@ -37,7 +37,7 @@ python:
   - pylint --disable=too-many-locals --disable=invalid-name tcp-probes/dashboard_provisioning.py
   - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods ping-probes/classes/influx_body.py
   - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods ping-probes/classes/ping_alpine_parser.py
-  - pylint --disable=too-many-locals --disable=invalid-name ping-probes/classes/ping_alpine.py
+  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-few-public-methods ping-probes/classes/ping_alpine.py
 
 yaml:
   stage: syntax_check
