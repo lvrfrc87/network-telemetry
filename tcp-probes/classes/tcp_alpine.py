@@ -27,6 +27,6 @@ class Tcp():
 
     def run_tcp(self):
         """run tcp probe"""
-        tcp_cmd = os.popen('sudo nping --tcp -c 1 --dest-port {} {}'.format(self.port, self.target))
+        tcp_cmd = os.popen('nping --tcp -c 1 --dest-port {} {}'.format(self.port, self.target))
         splitted_values = tcp_cmd.read().split()
         return splitted_values
