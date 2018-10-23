@@ -38,6 +38,9 @@ python:
   - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods ping-probes/classes/influx_body.py
   - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods ping-probes/classes/ping_alpine_parser.py
   - pylint --disable=too-many-locals --disable=invalid-name --disable=too-few-public-methods ping-probes/classes/ping_alpine.py
+  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods tcp-probes/classes/influx_body.py
+  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods tcp-probes/classes/tcp_alpine_parser.py
+  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-few-public-methods tcp-probes/classes/tcp_alpine.py
 
 yaml:
   stage: syntax_check
@@ -93,7 +96,7 @@ remove ping container:
   tags:
   - deployment
   script:
-  - ssh -i "~/.aws.pem" ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
   allow_failure: true
 
 remove tcp container:
@@ -101,7 +104,7 @@ remove tcp container:
   tags:
   - deployment
   script:
-  - ssh -i "~/.aws.pem" ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
   allow_failure: true
 
 deploy new containers:
@@ -109,7 +112,7 @@ deploy new containers:
   tags:
   - deployment
   script:
-  - ssh -i "~/.aws.pem" ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
-  - ssh -i "~/.aws.pem" ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
-  - ssh -i "~/.aws.pem" ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
-  - ssh -i "~/.aws.pem" ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-159-229.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"

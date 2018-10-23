@@ -2,4 +2,5 @@ influxdb/data
 influxdb/meta
 influxdb/wal
 grafana/database
-classes/__pycache__
+ping-probes/classes/__pycache__
+tcp-probes/classes/__pycache__
