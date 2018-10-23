@@ -2,3 +2,4 @@ influxdb/data
 influxdb/meta
 influxdb/wal
 grafana/database
+classes/__pycache__

@@ -25,7 +25,7 @@ def thread_tcp():
 
 def tcp(target, port, region):
     ''' tcp probe execution and regex rtt '''
-    nping = os.popen('nping --tcp -c 1 --dest-port {} {}'.format(port, target))
+    nping = os.popen('sudo nping --tcp -c 1 --dest-port {} {}'.format(port, target))
     nping_read = nping.read()
     json_body = []
     for i in nping_read.splitlines():
