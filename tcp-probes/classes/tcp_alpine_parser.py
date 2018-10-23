@@ -55,7 +55,7 @@ class Parser():
             avg_rtt = float(self.regex.search(self.splitted_values[46]).group())
         else:
             avg_rtt = float(0)
-        return avg
+        return avg_rtt
 
     def sent_pckt(self):
         """1"""
