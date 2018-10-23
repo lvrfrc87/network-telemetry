@@ -17,7 +17,6 @@ Values extracted in float datat type are:
 4 - Min response time
 5 - Average response time
 6 - Max response time
-7 - Delta between Min and Max response time
 """
 import re
 

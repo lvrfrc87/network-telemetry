@@ -1,13 +1,17 @@
-import yaml
-import time
+#!/usr/bin/env python3
+"""
+modular code to run ping probes in multithread and
+send result via API to one or more InfluxDB instance
+"""
 import threading
-from classes.ping_alpine import Ping
-from classes.influx_body import JsonBuilder
+import yaml
 from influxdb import InfluxDBClient
 from credPass import credPass
 from urllib3.exceptions import NewConnectionError
 from urllib3.exceptions import MaxRetryError
 from requests.exceptions import ConnectionError as ApiCallError
+from classes.ping_alpine import Ping
+from classes.influx_body import JsonBuilder
 
 def thread_ping():
     """ threading for ping probes """
@@ -19,11 +23,11 @@ def thread_ping():
             ping_threads.append(thread_targets)
 
 def influxdb_call(target, region):
-    splitted_values = Ping(target).run_ping()
-    json_body = JsonBuilder(splitted_values, target, region).json_body()
+    """ API call to InfluxDB """
+    json_body = JsonBuilder(Ping(target).run_ping(), target, region).json_body()
     for client in db_list:
         try:
-            connect  = InfluxDBClient(
+            connect = InfluxDBClient(
                 host=client,
                 port=8086,
                 username=credPass().load(client, 'username'),

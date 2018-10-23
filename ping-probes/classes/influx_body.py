@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 """
-Values extracted in float datat type are:
-1 - Packet transmitted
-2 - Packet received
-3 - Packet loss
-4 - Min response time
-5 - Average response time
-6 - Max response time
+[{
+    'measurement': 'ping_rtt',
+    'tags': {
+        'host': 'www.youtube.com',
+        'region': 'eu-east-1a'},
+        'time': '2018-10-23 09:46:11.500537',
+        'fields': {
+        'transmitted': 1.0,
+        'received': 1.0,
+        'loss': 0.0,
+        'min': 136.231,
+        'avg': 136.231,
+        'max': 136.231}
+        }]
 """
 import datetime
 from classes.ping_alpine_parser import Parser
