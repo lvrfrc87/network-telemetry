@@ -40,7 +40,7 @@ def influxdb_call(target, port, region):
             print(error)
 
 if __name__ == '__main__':
-    dic_targets = yaml.load(open('var/targets.yaml', 'rb'))
+    dic_targets = yaml.load(open('/var/targets.yaml', 'rb'))
     re_time = re.compile(r'(\d+\.\d+)')
     influx = credPass()
     # Add DB hostname/IP to db_list in case you want send result to more than one DB.
