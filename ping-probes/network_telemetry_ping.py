@@ -5,11 +5,11 @@ send result via API to one or more InfluxDB instance
 """
 import threading
 import yaml
-from influxdb import InfluxDBClient
 from credPass import credPass
 from urllib3.exceptions import NewConnectionError
 from urllib3.exceptions import MaxRetryError
 from requests.exceptions import ConnectionError as ApiCallError
+from influxdb import InfluxDBClient
 from classes.ping_alpine import Ping
 from classes.influx_body import JsonBuilder
 
