@@ -23,6 +23,7 @@ class Ping():
         self.target = target
 
     def run_ping(self):
-        ping_cmd = os.popen("ping -c 1 -t 1 {}".format(self.target))
+        """run ping usin Alpine flags"""
+        ping_cmd = os.popen("ping -c 1 -w 1 {}".format(self.target))
         splitted_values = ping_cmd.read().split()
         return splitted_values

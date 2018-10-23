@@ -19,6 +19,7 @@ import datetime
 from classes.ping_alpine_parser import Parser
 
 class JsonBuilder():
+    "self variable extracted from ping_alpine_parser"
     def __init__(self, splitted_values, target, region):
         self.target = target
         self.region = region
@@ -30,6 +31,7 @@ class JsonBuilder():
         self.max = Parser(splitted_values).max()
 
     def json_body(self):
+        "build json body for API call"
         json_body = [
             {
                 "measurement": "ping_rtt",

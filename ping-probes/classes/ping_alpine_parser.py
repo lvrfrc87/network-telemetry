@@ -27,6 +27,7 @@ class Parser():
         self.regex = re.compile(r'\d+\.?\d?')
 
     def transmitted(self):
+        """1"""
         if 'time=' in self.splitted_values[12]:
             transmitted = float(self.splitted_values[19])
         else:
@@ -34,6 +35,7 @@ class Parser():
         return transmitted
 
     def received(self):
+        """1"""
         if 'time=' in self.splitted_values[12]:
             received = float(self.splitted_values[22])
         else:
@@ -41,6 +43,7 @@ class Parser():
         return received
 
     def loss(self):
+        """0.0"""
         if 'time=' in self.splitted_values[12]:
             loss = float(self.regex.search(self.splitted_values[25]).group())
         else:
@@ -48,22 +51,25 @@ class Parser():
         return loss
 
     def min(self):
+        """130.795"""
         if 'time=' in self.splitted_values[12]:
-            min = float(self.splitted_values[31].split("/")[0])
+            min_rtt = float(self.splitted_values[31].split("/")[0])
         else:
-            min = float(0)
-        return min
+            min_rtt = float(0)
+        return min_rtt
 
     def avg(self):
+        """130.795"""
         if 'time=' in self.splitted_values[12]:
-            avg = float(self.splitted_values[31].split("/")[1])
+            avg_rtt = float(self.splitted_values[31].split("/")[1])
         else:
-            avg = float(0)
-        return avg
+            avg_rtt = float(0)
+        return avg_rtt
 
     def max(self):
+        """130.795"""
         if 'time=' in self.splitted_values[12]:
-            max = float(self.splitted_values[31].split("/")[2])
+            max_rtt = float(self.splitted_values[31].split("/")[2])
         else:
-            max = float(0)
-        return max
+            max_rtt = float(0)
+        return max_rtt
