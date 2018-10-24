@@ -1,8 +1,52 @@
 ## Network Telemetry
 
-Network telemetry is a tool based on ping RoundTripTime (RTT) and TCP SYN, SYN/ACK RTT. Classic UNIX ping command is used for ping probe, while nping from nmanp package is used for TCP probe.
+Network telemetry is a tool based on ping RoundTripTime (RTT) and TCP SYN, SYN/ACK RTT. Classic UNIX ping command is used for ping probe, while nping from nmanp package is used for TCP probes.
 
-A piece of python code is executed to run ping and nping command and to extract the RTT from the probes result.
+The stack is made of 3 parts: modular python3 code, 1 or ore InfluxDB instance and Grafana.
+All members of the stack run in their own Docker container built via pipeline.
+
+#### python3 modules
+
+```
+├── Dockerfile
+
+├── classes
+
+│   ├── __init__.py
+
+│   ├── __pycache__
+
+│   ├── influx_body.py
+
+│   ├── ping_alpine.py
+
+│   └── ping_alpine_parser.py
+
+├── network_telemetry_ping_prem_lon.py
+
+└── var
+
+    └── targets.yaml
+```
+
+In order to make furter implementation easier, the code has been divided in modules (run ping command,  parse ping output, write InfluxDB json API body, threads and API DB call)
+
+`ping_alpine.py` - is the code that actually run the ping command with the flags recognize form Alpine ping command (Alpine is the base OS used to build the container where the probe runs). By default 1 packet is sent with 1 second timeout
+
+`ping_alpine_parser.py` - parse the output passed from ping_alpine.py and extract the values required. These values are:
+
+    Packet transmitted
+    Packet received
+    Packet loss
+    Min response time
+    Average response time
+    Max response time
+
+`influx_body.py` - builds the actual json body for InfluxDB, with the values passed form the parser.
+
+`network_telemetry_ping_prem_lon.py` - this is the actual code that import the other modules, run the ping commands in multi-thread and make the API call to one or more InfluxDB instance
+
+All the above are also true for TCP probes
 
 Each probe run against one or multiple target hosts defined in YAML format under `var/target.yaml`.
 The YAML file for ping probes must be in `key:value` format where, `key` is the environment where the prob runs (or whatever meaningful description) and `value` must be a list of all IPs or FQDN intended to be probed.
