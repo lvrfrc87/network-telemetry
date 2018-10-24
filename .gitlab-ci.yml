@@ -27,6 +27,7 @@ python:
   tags:
   - syntax_check
   script:
+  - source telemetry/bin/activate
   - sudo pip3 install jinja2
   - sudo pip3 install credPass
   - sudo pip3 install influxdb
@@ -47,6 +48,7 @@ yaml:
   tags:
   - syntax_check
   script:
+  - source telemetry/bin/activate
   - sudo pip3 install yamllint
   - yamllint ping-probes/var/targets.yaml
   - yamllint tcp-probes/var/targets.yaml
@@ -56,6 +58,7 @@ json:
   tags:
   - syntax_check
   script:
+  - source telemetry/bin/activate
   - sudo apt-get install nodejs-legacy -y
   - sudo apt-get install npm -y
   - sudo npm install jsonlint -g
@@ -67,6 +70,7 @@ Dockerfile:
   tags:
   - syntax_check
   script:
+  - source telemetry/bin/activate
   - wget -cO hadolint https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64
   - chmod +x hadolint
   - ./hadolint tcp-probes/Dockerfile
@@ -96,7 +100,7 @@ remove ping container:
   tags:
   - deployment
   script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-87-75.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
   allow_failure: true
 
 remove tcp container:
@@ -104,7 +108,7 @@ remove tcp container:
   tags:
   - deployment
   script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-87-75.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
   allow_failure: true
 
 deploy new containers:
@@ -112,7 +116,7 @@ deploy new containers:
   tags:
   - deployment
   script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-87-75.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-87-75.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-87-75.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-87-75.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
