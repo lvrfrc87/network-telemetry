@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-"""
-modular code to run ping probes in multithread and
-send result via API to one or more InfluxDB instance
-"""
+"""EU-WEST-1C - app1.net.awsieprod2.linsys.tmcs"""
+
 import threading
+import time
 import yaml
+from influxdb import InfluxDBClient
 from credPass import credPass
 from urllib3.exceptions import NewConnectionError
 from urllib3.exceptions import MaxRetryError
 from requests.exceptions import ConnectionError as ApiCallError
-from influxdb import InfluxDBClient
 from classes.ping_alpine import Ping
 from classes.influx_body import JsonBuilder
 
@@ -23,26 +22,37 @@ def thread_ping():
             ping_threads.append(thread_targets)
 
 def influxdb_call(target, region):
-    """ API call to InfluxDB """
+    """ DB json body build """
     json_body = JsonBuilder(Ping(target).run_ping(), target, region).json_body()
-    for client in db_list:
-        try:
-            connect = InfluxDBClient(
-                host=client,
-                port=8086,
-                username=credPass().load(client, 'username'),
-                password=credPass().load(client, 'password'),
-                database='network_telemetry')
-            connect.write_points(json_body)
-        except (NewConnectionError, MaxRetryError, ApiCallError) as error:
-            print(error)
+    thread_influx(json_body)
+
+def thread_influx(json_body):
+    """ threading for db call"""
+    db_threads = []
+    for db_client in db_list:
+        db_targets = threading.Thread(target=influx_write, args=(json_body, db_client))
+        db_targets.start()
+        db_threads.append(db_targets)
+
+def influx_write(json_body, db_client):
+    """write to db"""
+    try:
+        connect = InfluxDBClient(
+            host=db_client,
+            port=8086,
+            username=credPass().load(db_client, 'username'),
+            password=credPass().load(db_client, 'password'),
+            database='network_telemetry')
+        connect.write_points(json_body)
+    except (NewConnectionError, MaxRetryError, ApiCallError) as error:
+        print(error)
 
 if __name__ == '__main__':
-    dic_targets = yaml.load(open('/var/targets.yaml', 'rb'))
-    # Add DB hostname/IP to db_list in case you want send result to more than one DB.
-    # Remember to update .credential.json with DBs login.
+    dic_targets = yaml.load(open('var/targets.yaml', 'rb'))
     db_list = [
-        'db'
+        'app1.net.awsieprod2.linsys.tmcs',
+        'db1.telemetry.netams1.netsys.tmcs'
         ]
     while True:
         thread_ping()
+        time.sleep(1)
