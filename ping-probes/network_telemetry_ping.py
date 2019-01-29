@@ -48,7 +48,7 @@ def influx_write(json_body, db_client):
         print(error)
 
 if __name__ == '__main__':
-    dic_targets = yaml.load(open('var/targets.yaml', 'rb'))
+    dic_targets = yaml.load(open('/var/targets.yaml', 'rb'))
     db_list = [
         'app1.net.awsieprod2.linsys.tmcs',
         'db1.telemetry.netams1.netsys.tmcs'
