@@ -6,6 +6,11 @@ stages:
   - pre_deployment
   - deployment
 
+cache:
+  paths:
+    - telemetry/
+  policy: pull-push
+
 build:
   stage: build_virtualenv
   tags:
