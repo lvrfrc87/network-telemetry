@@ -31,12 +31,8 @@ python:
     - pylint ping-probes/dashboard_provisioning.py
     - pylint tcp-probes/network_telemetry_tcp.py
     - pylint tcp-probes/dashboard_provisioning.py
-    - pylint ping-probes/classes/influx_body.py
-    - pylint ping-probes/classes/ping_alpine_parser.py
-    - pylint ping-probes/classes/ping_alpine.py
-    - pylint tcp-probes/classes/influx_body.py
-    - pylint tcp-probes/classes/tcp_alpine_parser.py
-    - pylint tcp-probes/classes/tcp_alpine.py
+    - pylint --disable=too-few-public-methods --disable=too-many-instance-attributes ping-probes/classes/*.py
+    - pylint --disable=too-few-public-methods --disable=too-many-instance-attributes tcp-probes/classes/*.py
 
 yaml:
   stage: syntax_check
@@ -78,7 +74,8 @@ jinja2:
   script:
     - source telemetry/bin/activate
     - pip3 install jinjaninja==0.1.2
-    - jinja-ninja templates/
+    - jinja-ninja tcp-probes/var/dashboard_provisioning.py
+    - jinja-ninja ping-probes/var/dashboard_provisioning.py
 
 docker build:
   stage: docker_build
@@ -104,7 +101,7 @@ remove ping container:
   tags:
   - telemetry
   script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
   allow_failure: true
 
 remove tcp container:
@@ -112,7 +109,7 @@ remove tcp container:
   tags:
   - telemetry
   script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
   allow_failure: true
 
 deploy new containers:
@@ -120,7 +117,7 @@ deploy new containers:
   tags:
   - telemetry
   script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
