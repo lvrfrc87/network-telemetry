@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-"""EU-WEST-1C - app1.net.awsieprod2.linsys.tmcs"""
+''' Code for tcp probe. The command is executed every
+    5 seconds and the RTT is extraxcted via regex.
+    The value is stored in one or more InfluxDb instance'''
 
 import threading
 import time
 import yaml
-from influxdb import InfluxDBClient
-from credPass import credPass
 from urllib3.exceptions import NewConnectionError
 from urllib3.exceptions import MaxRetryError
 from requests.exceptions import ConnectionError as ApiCallError
 from classes.ping_alpine import Ping
 from classes.influx_body import JsonBuilder
+from influxdb import InfluxDBClient
+from credPass import credPass
 
 def thread_ping():
     """ threading for ping probes """
