@@ -10,10 +10,10 @@ import yaml
 from urllib3.exceptions import NewConnectionError
 from urllib3.exceptions import MaxRetryError
 from requests.exceptions import ConnectionError as ApiCallError
-from classes.tcp_alpine import Tcp
-from classes.influx_body import JsonBuilder
 from credPass import credPass
 from influxdb import InfluxDBClient
+from classes.tcp_alpine import Tcp
+from classes.influx_body import JsonBuilder
 
 def thread_tcp():
     ''' multithreading tcp probes '''

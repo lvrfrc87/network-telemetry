@@ -9,10 +9,10 @@ import yaml
 from urllib3.exceptions import NewConnectionError
 from urllib3.exceptions import MaxRetryError
 from requests.exceptions import ConnectionError as ApiCallError
+from credPass import credPass
+from influxdb import InfluxDBClient
 from classes.ping_alpine import Ping
 from classes.influx_body import JsonBuilder
-from influxdb import InfluxDBClient
-from credPass import credPass
 
 def thread_ping():
     """ threading for ping probes """
