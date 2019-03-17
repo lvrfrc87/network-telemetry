@@ -257,8 +257,8 @@
   },
   "timezone": "browser",
   {% for region, list in yamlVar.items() -%}
-  "title": "{{region}}-tcp",
+  "title": "{{ region }}-tcp",
   {% endfor -%}
-  "uid": "{{ range(1, 999999999) | random }}",
+  "uid": "{{ range(1, 999999999) }}",
   "version": 1
 }
