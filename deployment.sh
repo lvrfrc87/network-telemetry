@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Legacy file - replaced by CI/CD
 
 # INFLUXDB
 docker run --name db -d \
