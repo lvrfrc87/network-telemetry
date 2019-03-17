@@ -21,10 +21,10 @@ python:
   tags:
     - telemetry
   script:
-    - pip3 install jinja2==2.10
-    - pip3 install credPass==1.1
-    - pip3 install influxdb==5.2.0
-    - pip3 install pylint==2.3.1
+    - sudo pip3 install jinja2==2.10
+    - sudo pip3 install credPass==1.1
+    - sudo pip3 install influxdb==5.2.0
+    - sudo pip3 install pylint==2.3.1
     - pylint ping-probes/network_telemetry_ping.py
     - pylint ping-probes/dashboard_provisioning.py
     - pylint tcp-probes/network_telemetry_tcp.py
