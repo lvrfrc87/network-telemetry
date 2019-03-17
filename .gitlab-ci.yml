@@ -111,7 +111,7 @@ deploy new containers:
   tags:
   - telemetry
   script:
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
   - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
   - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
