@@ -216,6 +216,6 @@
   {% for region, list in yamlVar.items() -%}
   "title": "{{ region }}-ping",
   {% endfor -%}
-  "uid": "{{ range(1, 999999999) | random }}",
+  "uid": "{{ range(1, 999999999) }}",
   "version": 1
 }
