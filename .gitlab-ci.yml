@@ -9,27 +9,27 @@ stages:
 build:
   stage: build_virtualenv
   tags:
-    - gitlab-org
+    - telemetry
   script:
-    - apt-get update && apt-get upgrade -y
-    - apt-get install python3-pip -y
-    - pip3 install --upgrade pip
-    - pip3 install virtualenv
-    - virtualenv gitlab-org
+    - sudo apt-get update && sudo apt-get upgrade -y
+    - sudo apt-get install python3-pip -y
+    - sudo pip3 install --upgrade pip
+    - sudo pip3 install virtualenv
+    - virtualenv telemetry
 
 python:
   stage: syntax_check
   tags:
-    - gitlab-org
+    - telemetry
   script:
-    - source gitlab-org/bin/activate
+    - source telemetry/bin/activate
     - pip3 install jinja2==2.10
     - pip3 install credPass==1.1
     - pip3 install influxdb==5.2.0
     - pip3 install pylint==2.3.1
-    - pylint ping-probes/network_gitlab-org_ping.py
+    - pylint ping-probes/network_telemetry_ping.py
     - pylint ping-probes/dashboard_provisioning.py
-    - pylint tcp-probes/network_gitlab-org_tcp.py
+    - pylint tcp-probes/network_telemetry_tcp.py
     - pylint tcp-probes/dashboard_provisioning.py
     - pylint --disable=too-few-public-methods --disable=too-many-instance-attributes ping-probes/classes/*.py
     - pylint --disable=too-few-public-methods --disable=too-many-instance-attributes tcp-probes/classes/*.py
@@ -37,31 +37,31 @@ python:
 yaml:
   stage: syntax_check
   tags:
-    - gitlab-org
+    - telemetry
   script:
-    - source gitlab-org/bin/activate
-    - pip3 install yamllint==1.15.0
+    - source telemetry/bin/activate
+    - sudo pip3 install yamllint==1.15.0
     - yamllint ping-probes/var/targets.yaml
     - yamllint tcp-probes/var/targets.yaml
 
 json:
   stage: syntax_check
   tags:
-    - gitlab-org
+    - telemetry
   script:
-    - source gitlab-org/bin/activate
-    - apt-get install nodejs-legacy -y
-    - apt-get install npm -y
-    - npm install jsonlint -g
+    - source telemetry/bin/activate
+    - sudo apt-get install nodejs-legacy -y
+    - sudo apt-get install npm -y
+    - sudo npm install jsonlint -g
     - jsonlint ping-probes/.credentials.json
     - jsonlint tcp-probes/.credentials.json
 
 Dockerfile:
   stage: syntax_check
   tags:
-    - gitlab-org
+    - telemetry
   script:
-    - source gitlab-org/bin/activate
+    - source telemetry/bin/activate
     - wget -cO hadolint https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64
     - chmod +x hadolint
     - ./hadolint tcp-probes/Dockerfile
@@ -70,9 +70,9 @@ Dockerfile:
 jinja2:
   stage: syntax_check
   tags:
-    - gitlab-org
+    - telemetry
   script:
-    - source gitlab-org/bin/activate
+    - source telemetry/bin/activate
     - pip3 install jinjaninja==0.1.2
     - jinja-ninja tcp-probes/var/dashboard_provisioning.py
     - jinja-ninja ping-probes/var/dashboard_provisioning.py
@@ -80,44 +80,44 @@ jinja2:
 docker build:
   stage: docker_build
   tags:
-  - gitlab-org
+  - telemetry
   script:
-  - apt-get remove docker docker-engine docker.io -y
-  - apt-get install apt-transport-https ca-certificates curl software-properties-common -y
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-  - apt-key fingerprint 0EBFCD88
-  - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - apt-get update && apt-get install docker-ce -y
-  - echo $DOCKER_PASSWORD | docker login -u=federico87 --password-stdin
-  - docker build ping-probes/ -t network_gitlab-org_ping:latest
-  - docker tag network_gitlab-org_ping federico87/network_gitlab-org_ping
-  - docker push federico87/network_gitlab-org_ping
-  - docker build tcp-probes/ -t network_gitlab-org_tcp:latest
-  - docker tag network_gitlab-org_tcp federico87/network_gitlab-org_tcp
-  - docker push federico87/network_gitlab-org_tcp
+  - sudo apt-get remove docker docker-engine docker.io -y
+  - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo apt-key fingerprint 0EBFCD88
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update && sudo apt-get install docker-ce -y
+  - echo $DOCKER_PASSWORD | sudo docker login -u=federico87 --password-stdin
+  - sudo docker build ping-probes/ -t network_telemetry_ping:latest
+  - sudo docker tag network_telemetry_ping federico87/network_telemetry_ping
+  - sudo docker push federico87/network_telemetry_ping
+  - sudo docker build tcp-probes/ -t network_telemetry_tcp:latest
+  - sudo docker tag network_telemetry_tcp federico87/network_telemetry_tcp
+  - sudo docker push federico87/network_telemetry_tcp
 
 remove ping container:
   stage: pre_deployment
   tags:
-  - gitlab-org
+  - telemetry
   script:
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "docker rm -f ping"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
   allow_failure: true
 
 remove tcp container:
   stage: pre_deployment
   tags:
-  - gitlab-org
+  - telemetry
   script:
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "docker rm -f tcp"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
   allow_failure: true
 
 deploy new containers:
   stage: deployment
   tags:
-  - gitlab-org
+  - telemetry
   script:
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "docker run -d --name=ping --link db --restart=always federico87/network_gitlab-org_ping"
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "docker run -d --name=tcp --link db --restart=always federico87/network_gitlab-org_tcp"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
+  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
   - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
   - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
