@@ -67,7 +67,7 @@ jinja2:
   tags:
     - telemetry
   script:
-    - pip3 install jinjaninja==0.1.2
+    - sudo pip3 install jinjaninja==0.1.2
     - jinja-ninja tcp-probes/var/dashboard_template.j2
     - jinja-ninja ping-probes/var/dashboard_template.j2
 
