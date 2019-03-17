@@ -214,7 +214,7 @@
   },
   "timezone": "browser",
   {% for region, list in yamlVar.items() -%}
-  "title": "{{region}}-ping",
+  "title": "{{ region }}-ping",
   {% endfor -%}
   "uid": "{{ range(1, 999999999) | random }}",
   "version": 1
