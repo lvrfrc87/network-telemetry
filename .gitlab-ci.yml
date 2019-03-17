@@ -25,12 +25,12 @@ python:
     - sudo pip3 install credPass==1.1
     - sudo pip3 install influxdb==5.2.0
     - sudo pip3 install pylint==2.3.1
-    - python3 -m pylint ping-probes/network_telemetry_ping.py
-    - python3 -m pylint ping-probes/dashboard_provisioning.py
+    - python3 -m pylint --disable=invalid-name ping-probes/network_telemetry_ping.py
+    - python3 -m pylint --disable=invalid-name ping-probes/dashboard_provisioning.py
     - python3 -m pylint tcp-probes/network_telemetry_tcp.py
     - python3 -m pylint tcp-probes/dashboard_provisioning.py
-    - python3 -m pylint --disable=too-few-public-methods --disable=too-many-instance-attributes --disable=invalid-name ping-probes/classes/*.py
-    - python3 -m pylint --disable=too-few-public-methods --disable=too-many-instance-attributes --disable=invalid-name tcp-probes/classes/*.py
+    - python3 -m pylint --disable=too-few-public-methods --disable=too-many-instance-attributes ping-probes/classes/*.py
+    - python3 -m pylint --disable=too-few-public-methods --disable=too-many-instance-attributes tcp-probes/classes/*.py
 
 yaml:
   stage: syntax_check
