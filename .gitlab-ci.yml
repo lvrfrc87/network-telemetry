@@ -20,6 +20,7 @@ build environment:
     - sudo apt-get install python3-pip -y
     - sudo pip3 install --upgrade pip
     - sudo pip3 install virtualenv
+    - virtualenv telemetry
     - source telemetry/bin/activate
 
 python:
