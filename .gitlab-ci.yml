@@ -6,6 +6,11 @@ stages:
   - pre_deployment
   - deployment
 
+cache:
+  paths:
+    - telemetry/
+  policy: pull-push
+
 build environment:
   stage: build_env
   tags:
@@ -15,6 +20,7 @@ build environment:
     - sudo apt-get install python3-pip -y
     - sudo pip3 install --upgrade pip
     - sudo pip3 install virtualenv
+    - source telemetry/bin/activate
 
 python:
   stage: syntax_check
@@ -90,38 +96,28 @@ docker build:
   - sudo docker tag network_telemetry_tcp federico87/network_telemetry_tcp
   - sudo docker push federico87/network_telemetry_tcp
 
-# remove ping container:
-#   stage: pre_deployment
-#   tags:
-#   - telemetry
-#   script:
-#   - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
-#   allow_failure: true
-#
-# remove tcp container:
-#   stage: pre_deployment
-#   tags:
-#   - telemetry
-#   script:
-#   - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
-#   allow_failure: true
+remove ping container:
+  stage: pre_deployment
+  tags:
+  - deployment
+  script:
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
+  allow_failure: true
+
+remove tcp container:
+  stage: pre_deployment
+  tags:
+  - deployment
+  script:
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
+  allow_failure: true
 
 deploy new containers:
   stage: deployment
   tags:
-  - telemetry
+  - deployment
   script:
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "docker run --name db -d \
-        -e INFLUXDB_DB=network_telemetry \
-        -e INFLUXDB_ADMIN_USER=root -e INFLUXDB_ADMIN_PASSWORD=supersecretpassword \
-        -v $PWD/influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
-        -v $PWD/influxdb:/var/lib/influxdb \
-        influxdb"
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "docker run -d --name=grafana --link db -p 3000:3000 \
-         -v $PWD/grafana/database:/var/lib/grafana \
-         -v $PWD/grafana/dashboards:/etc/grafana/provisioning/dashboards \
-         -v $PWD/grafana/json:/var/lib/grafana/dashboards \
-         grafana/grafana"
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping; sudo docker run -d --name=ping --link db --restart=always network-telemetry-ping"
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp; sudo docker run -d --name=tcp --link db --restart=always network-telemetry-tcp"
-  - ssh ubuntu@ec2-35-178-167-183.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp; sudo docker run -d --name=tcp --link db --restart=always network-telemetry-tcp"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
+  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
