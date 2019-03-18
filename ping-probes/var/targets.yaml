@@ -1,5 +1,7 @@
 ---
-eu-east-1a:
+aws-london:
   - www.amazon.com
   - www.google.com
   - www.youtube.com
+  - www.yahoo.com
+  - www.wikipedia.org

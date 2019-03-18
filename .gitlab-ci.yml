@@ -1,5 +1,6 @@
 stages:
   - build_env
+  - build_env
   - syntax_check
   - docker_build
   - pre_deployment
@@ -10,76 +11,77 @@ cache:
     - telemetry/
   policy: pull-push
 
-build:
+build environment:
   stage: build_env
   tags:
-  - build_env
+    - telemetry
   script:
-  - sudo apt-get update && sudo apt-get upgrade -y
-  - sudo apt-get install python3-pip -y
-  - sudo pip3 install --upgrade pip
-  - sudo pip3 install virtualenv
-  - virtualenv telemetry
-  - source telemetry/bin/activate
+    - sudo apt-get update && sudo apt-get upgrade -y
+    - sudo apt-get install python3-pip -y
+    - sudo pip3 install --upgrade pip
+    - sudo pip3 install virtualenv
+    - virtualenv telemetry
+    - source telemetry/bin/activate
 
 python:
   stage: syntax_check
   tags:
-  - syntax_check
+    - telemetry
   script:
-  - source telemetry/bin/activate
-  - sudo pip3 install jinja2
-  - sudo pip3 install credPass
-  - sudo pip3 install influxdb
-  - sudo pip3 install pylint
-  - pylint --disable=too-many-locals --disable=invalid-name ping-probes/network_telemetry_ping.py
-  - pylint --disable=too-many-locals --disable=invalid-name ping-probes/dashboard_provisioning.py
-  - pylint --disable=too-many-locals --disable=invalid-name tcp-probes/network_telemetry_tcp.py
-  - pylint --disable=too-many-locals --disable=invalid-name tcp-probes/dashboard_provisioning.py
-  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods ping-probes/classes/influx_body.py
-  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods ping-probes/classes/ping_alpine_parser.py
-  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-few-public-methods ping-probes/classes/ping_alpine.py
-  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods tcp-probes/classes/influx_body.py
-  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-many-instance-attributes --disable=too-few-public-methods tcp-probes/classes/tcp_alpine_parser.py
-  - pylint --disable=too-many-locals --disable=invalid-name --disable=too-few-public-methods tcp-probes/classes/tcp_alpine.py
+    - sudo pip3 install jinja2==2.10
+    - sudo pip3 install credPass==1.1
+    - sudo pip3 install influxdb==5.2.0
+    - sudo pip3 install pylint==2.3.1
+    - python3 -m pylint --disable=invalid-name ping-probes/network_telemetry_ping.py
+    - python3 -m pylint --disable=invalid-name ping-probes/dashboard_provisioning.py
+    - python3 -m pylint --disable=invalid-name tcp-probes/network_telemetry_tcp.py
+    - python3 -m pylint --disable=invalid-name tcp-probes/dashboard_provisioning.py
+    - python3 -m pylint --disable=too-few-public-methods --disable=too-many-instance-attributes ping-probes/classes/*.py
+    - python3 -m pylint --disable=too-few-public-methods --disable=too-many-instance-attributes tcp-probes/classes/*.py
 
 yaml:
   stage: syntax_check
   tags:
-  - syntax_check
+    - telemetry
   script:
-  - source telemetry/bin/activate
-  - sudo pip3 install yamllint
-  - yamllint ping-probes/var/targets.yaml
-  - yamllint tcp-probes/var/targets.yaml
+    - sudo pip3 install yamllint==1.15.0
+    - yamllint ping-probes/var/targets.yaml
+    - yamllint tcp-probes/var/targets.yaml
 
 json:
   stage: syntax_check
   tags:
-  - syntax_check
+    - telemetry
   script:
-  - source telemetry/bin/activate
-  - sudo apt-get install nodejs-legacy -y
-  - sudo apt-get install npm -y
-  - sudo npm install jsonlint -g
-  - jsonlint ping-probes/.credentials.json
-  - jsonlint tcp-probes/.credentials.json
+    - sudo apt-get install nodejs-legacy -y
+    - sudo apt-get install npm -y
+    - sudo npm install jsonlint -g
+    - jsonlint ping-probes/.credentials.json
+    - jsonlint tcp-probes/.credentials.json
 
 Dockerfile:
   stage: syntax_check
   tags:
-  - syntax_check
+    - telemetry
   script:
-  - source telemetry/bin/activate
-  - wget -cO hadolint https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64
-  - chmod +x hadolint
-  - ./hadolint tcp-probes/Dockerfile
-  - ./hadolint ping-probes/Dockerfile
+    - wget -cO hadolint https://github.com/hadolint/hadolint/releases/download/v1.13.0/hadolint-Linux-x86_64
+    - chmod +x hadolint
+    - ./hadolint tcp-probes/Dockerfile
+    - ./hadolint ping-probes/Dockerfile
+
+jinja2:
+  stage: syntax_check
+  tags:
+    - telemetry
+  script:
+    - sudo pip3 install jinjaninja==0.1.2
+    - jinja-ninja tcp-probes/var/dashboard_template.j2
+    - jinja-ninja ping-probes/var/dashboard_template.j2
 
 docker build:
   stage: docker_build
   tags:
-  - docker_build
+  - telemetry
   script:
   - sudo apt-get remove docker docker-engine docker.io -y
   - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y

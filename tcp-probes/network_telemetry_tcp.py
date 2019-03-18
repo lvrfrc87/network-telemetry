@@ -2,14 +2,15 @@
 ''' Code for tcp probe. The command is executed every
     5 seconds and the RTT is extraxcted via regex.
     The value is stored in one or more InfluxDb instance'''
+
 import re
 import time
 import threading
 import yaml
-from credPass import credPass
 from urllib3.exceptions import NewConnectionError
 from urllib3.exceptions import MaxRetryError
 from requests.exceptions import ConnectionError as ApiCallError
+from credPass import credPass
 from influxdb import InfluxDBClient
 from classes.tcp_alpine import Tcp
 from classes.influx_body import JsonBuilder
