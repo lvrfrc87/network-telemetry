@@ -1,0 +1,10 @@
+influxdb:
+  image: influxdb:latest
+  container_name: db
+  environment:
+    - INFLUXDB_DB: network_telemetry
+    - INFLUXDB_ADMIN_USER: root
+    - INFLUXDB_ADMIN_PASSWORD: supersecretpassword
+  volumes:
+    - /influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+    - /influxdb:/var/lib/influxdb
