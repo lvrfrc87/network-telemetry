@@ -1,5 +1,7 @@
 ---
-eu-east-1a:
+aws-london:
   amazon.com: 443
   google.com: 443
   youtube.com: 443
+  yahoo.com: 443
+  wikipedia.org: 443

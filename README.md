@@ -1,6 +1,6 @@
 ## Network Telemetry
 
-Network telemetry is a tool based on ping RoundTripTime (RTT) and TCP SYN, SYN/ACK RTT. Classic UNIX ping command is used for ping probe, while nping from nmanp package is used for TCP probes.
+Network telemetry is a tool based on ping RoundTripTime (RTT) and TCP SYN, SYN/ACK RTT. Classic UNIX ping command is used for ping probe, while nping from nmap package is used for TCP probes.
 
 The stack is made of 3 parts: modular python3 code, 1 or ore InfluxDB instance and Grafana.
 All members of the stack run in their own Docker container built via pipeline.
@@ -29,9 +29,9 @@ All members of the stack run in their own Docker container built via pipeline.
     └── targets.yaml
 ```
 
-In order to make furter implementation easier, the code has been divided in modules (run ping command,  parse ping output, write InfluxDB json API body, threads and API DB call)
+In order to make further implementation easier, the code has been divided in modules (run ping command,  parse ping output, write InfluxDB json API body, threads and API DB call)
 
-`ping_alpine.py` - is the code that actually run the ping command with the flags recognize form Alpine ping command (Alpine is the base OS used to build the container where the probe runs). By default 1 packet is sent with 1 second timeout
+`ping_alpine.py` - is the code that actually run the ping command with the flags recognise form Alpine ping command (Alpine is the base OS used to build the container where the probe runs). By default 1 packet is sent with 1 second timeout
 
 `ping_alpine_parser.py` - parse the output passed from ping_alpine.py and extract the values required. These values are:
 
@@ -74,6 +74,9 @@ A pipeline is provided with `.gitlab-ci.yml` for syntax check and deployment in 
 
 A web front-end developer complains about some connectivity issue between his Django application and mysql backend database. His web application runs in a CoreOS AWS instance. As always happens in these cases, developer blames the network.
 Cloning the git repo in his own CoreOS instance, updating the `target.yaml` files with the DB IP and TCP port, running `deployment.sh` script, the developer has a full telemetry setup to verify up to Layer4 connectivity between the Django instance to DB instance. So it will help him if there is a real network connectivity issue (ping), slow application response (TCP) or neither of both.
+
+#### Live Demo
+
 
 ### AWS instance
 
