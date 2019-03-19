@@ -9,9 +9,7 @@ services:
       - INFLUXDB_ADMIN_PASSWORD=supersecretpassword
     volumes:
       - ./influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
-      - ./influxdb/data:/var/lib/influxdb/data
-      - ./influxdb/meta:/var/lib/influxdb/meta
-      - ./influxdb/wal:/var/lib/influxdb/wal
+      - ./influxdb/:/var/lib/influxdb/
 
   grafana:
     image: grafana/grafana:latest
