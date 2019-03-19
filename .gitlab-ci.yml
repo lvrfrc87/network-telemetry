@@ -96,14 +96,14 @@ docker build:
     - sudo docker tag network_telemetry_tcp federico87/network_telemetry_tcp
     - sudo docker push federico87/network_telemetry_tcp
 
-remove old containers:
-  stage: pre_deployment
-  tags:
-    - telemetry
-  script:
-    - sudo docker rm -f $(docker ps -a -q)
-    - docker rmi -f $(docker images -a -q)
-  allow_failure: true
+# remove old containers:
+#   stage: pre_deployment
+#   tags:
+#     - telemetry
+#   script:
+#     - sudo docker rm -f $(sudo docker ps -a -q)
+#     - sudo docker rmi -f $(sudo docker images -a -q)
+#   allow_failure: true
 
 deploy new containers:
   stage: deployment
