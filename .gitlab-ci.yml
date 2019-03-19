@@ -117,8 +117,8 @@ deploy new containers:
   tags:
     - telemetry
   script:
-    - python3 $PWD/ping-probes/dashboard-provisioning.py
-    - python3 $PWD/tcp-probes/dashboard-provisioning.py
+    - python3 $PWD/ping-probes/dashboard_provisioning.py
+    - python3 $PWD/tcp-probes/dashboard_provisioning.py
     - sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     - sudo chmod +x /usr/local/bin/docker-compose
     - docker-compose up -d
