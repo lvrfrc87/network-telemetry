@@ -42,7 +42,7 @@ class JsonBuilder():
         "build json body for API call"
         json_body = [
             {
-                "measurement": "ping_rtt",
+                "measurement": "tcp_rtt",
                 "tags": {
                     "host": self.target,
                     "region": self.region},
