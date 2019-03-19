@@ -99,7 +99,7 @@ docker build:
 remove old ping container:
   stage: pre_deployment
   tags:
-    - deployment
+    - telemetry
   script:
     - sudo docker rm -f ping
   allow_failure: true
@@ -107,7 +107,7 @@ remove old ping container:
 remove old tcp container:
   stage: pre_deployment
   tags:
-    - deployment
+    - telemetry
   script:
     - sudo docker rm -f tcp
   allow_failure: true
@@ -115,7 +115,7 @@ remove old tcp container:
 deploy new containers:
   stage: deployment
   tags:
-    - deployment
+    - telemetry
   script:
     - python3 ./ping-probes/dashboard-provisioning.py
     - python3 ./tcp-probes/dashboard-provisioning.py
