@@ -4,7 +4,7 @@
     'measurement': 'ping_rtt',
     'tags': {
         'host': 'www.youtube.com',
-        'region': 'eu-east-1a'},
+        'region': 'aws-london'},
         'time': '2018-10-23 09:46:11.500537',
         'fields': {
         'transmitted': 1.0,

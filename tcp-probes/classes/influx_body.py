@@ -4,7 +4,7 @@
     'measurement': 'ping_rtt',
     'tags': {
         'host': 'google.com',
-        'region': 'eu-east-1a'},
+        'region': 'aws-london'},
     'time': '2018-10-23 15:09:42.156060',
     'fields': {
         'transmitted': 0.0092,
