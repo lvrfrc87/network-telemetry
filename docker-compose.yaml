@@ -1,0 +1,34 @@
+version: '3'
+services:
+  influxdb:
+    image: influxdb:latest
+    container_name: db
+    environment:
+      - INFLUXDB_DB=network_telemetry
+      - INFLUXDB_ADMIN_USER=root
+      - INFLUXDB_ADMIN_PASSWORD=supersecretpassword
+    volumes:
+      - ./influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - ./influxdb/data:/var/lib/influxdb/data
+      - ./influxdb/meta:/var/lib/influxdb/meta
+      - ./influxdb/wal:/var/lib/influxdb/wal
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/database:/var/lib/grafana\
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/json:/var/lib/grafana/dashboards
+
+  ping:
+    image: federico87/network_telemetry_ping:latest
+    container_name: ping
+    restart: always
+
+  tcp:
+    image: federico87/network_telemetry_tcp:latest
+    container_name: tcp
+    restart: always

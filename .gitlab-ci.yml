@@ -1,6 +1,5 @@
 stages:
   - build_env
-  - build_env
   - syntax_check
   - docker_build
   - pre_deployment
@@ -81,44 +80,38 @@ jinja2:
 docker build:
   stage: docker_build
   tags:
-  - telemetry
+    - telemetry
   script:
-  - sudo apt-get remove docker docker-engine docker.io -y
-  - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo apt-key fingerprint 0EBFCD88
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update && sudo apt-get install docker-ce -y
-  - echo $DOCKER_PASSWORD | sudo docker login -u=federico87 --password-stdin
-  - sudo docker build ping-probes/ -t network_telemetry_ping:latest
-  - sudo docker tag network_telemetry_ping federico87/network_telemetry_ping
-  - sudo docker push federico87/network_telemetry_ping
-  - sudo docker build tcp-probes/ -t network_telemetry_tcp:latest
-  - sudo docker tag network_telemetry_tcp federico87/network_telemetry_tcp
-  - sudo docker push federico87/network_telemetry_tcp
+    - sudo apt-get remove docker docker-engine docker.io -y
+    - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo apt-key fingerprint 0EBFCD88
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    - sudo apt-get update && sudo apt-get install docker-ce -y
+    - echo $DOCKER_PASSWORD | sudo docker login -u=federico87 --password-stdin
+    - sudo docker build ping-probes/ -t network_telemetry_ping:latest
+    - sudo docker tag network_telemetry_ping federico87/network_telemetry_ping
+    - sudo docker push federico87/network_telemetry_ping
+    - sudo docker build tcp-probes/ -t network_telemetry_tcp:latest
+    - sudo docker tag network_telemetry_tcp federico87/network_telemetry_tcp
+    - sudo docker push federico87/network_telemetry_tcp
 
-remove ping container:
+remove old containers:
   stage: pre_deployment
   tags:
-  - deployment
+    - telemetry
   script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker rm -f ping"
-  allow_failure: true
-
-remove tcp container:
-  stage: pre_deployment
-  tags:
-  - deployment
-  script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker rm -f tcp"
+    - sudo docker rm -f $(docker ps -a -q)
+    - docker rmi -f $(docker images -a -q)
   allow_failure: true
 
 deploy new containers:
   stage: deployment
   tags:
-  - deployment
+    - telemetry
   script:
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=ping --link db --restart=always federico87/network_telemetry_ping"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "sudo docker run -d --name=tcp --link db --restart=always federico87/network_telemetry_tcp"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/ping-probes/dashboard_provisioning.py"
-  - ssh -i "~/.aws.pem" ec2-user@ec2-18-130-13-134.eu-west-2.compute.amazonaws.com "/usr/bin/python3 ~/tcp-probes/dashboard_provisioning.py"
+    - python3 $PWD/ping-probes/dashboard_provisioning.py
+    - python3 $PWD/tcp-probes/dashboard_provisioning.py
+    - sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    - sudo chmod +x /usr/local/bin/docker-compose
+    - sudo docker-compose up -d
