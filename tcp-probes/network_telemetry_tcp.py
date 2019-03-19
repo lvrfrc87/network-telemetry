@@ -32,8 +32,8 @@ def influxdb_call(target, port, region):
             connect = InfluxDBClient(
                 host=client,
                 port=8086,
-                username=influx.load(client, 'username'),
-                password=influx.load(client, 'password'),
+                username=credPass().load(client, 'username'),
+                password=credPass().load(client, 'password'),
                 database='network_telemetry')
             for json in json_body:
                 connect.write_points(json)
@@ -42,8 +42,6 @@ def influxdb_call(target, port, region):
 
 if __name__ == '__main__':
     dic_targets = yaml.load(open('/var/targets.yaml', 'rb'))
-    re_time = re.compile(r'(\d+\.\d+)')
-    influx = credPass()
     # Add DB hostname/IP to db_list in case you want send result to more than one DB.
     # Remember to update .credential.json with DBs login.
     db_list = [
@@ -51,4 +49,4 @@ if __name__ == '__main__':
         ]
     while True:
         thread_tcp()
-        time.sleep(5)
+        time.sleep(1)
