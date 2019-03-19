@@ -93,8 +93,8 @@ remove old containers:
   tags:
     - telemetry
   script:
-    - sudo docker rm -f $(docker ps -a -q)
-    - docker rmi -f $(docker images -a -q)
+    - sudo docker rm -f $(sudo docker ps -a -q)
+    - sudo docker rmi -f $(sudo docker images -a -q)
   allow_failure: true
 
 deploy new containers:
