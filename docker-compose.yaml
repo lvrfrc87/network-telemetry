@@ -24,11 +24,11 @@ services:
       - ./grafana/json:/var/lib/grafana/dashboards
 
   ping:
-    image: network-telemetry-ping:latest
+    image: federico87/network_telemetry_ping:latest
     container_name: ping
     restart: always
 
   tcp:
-    image: network-telemetry-ping:latest
+    image: federico87/network_telemetry_tcp:latest
     container_name: tcp
     restart: always

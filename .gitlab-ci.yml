@@ -96,20 +96,13 @@ docker build:
     - sudo docker tag network_telemetry_tcp federico87/network_telemetry_tcp
     - sudo docker push federico87/network_telemetry_tcp
 
-remove old ping container:
+remove old containers:
   stage: pre_deployment
   tags:
     - telemetry
   script:
-    - sudo docker rm -f ping
-  allow_failure: true
-
-remove old tcp container:
-  stage: pre_deployment
-  tags:
-    - telemetry
-  script:
-    - sudo docker rm -f tcp
+    - sudo docker rm -f $(docker ps -a -q)
+    - docker rmi -f $(docker images -a -q)
   allow_failure: true
 
 deploy new containers:
