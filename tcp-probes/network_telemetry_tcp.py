@@ -3,7 +3,6 @@
     5 seconds and the RTT is extraxcted via regex.
     The value is stored in one or more InfluxDb instance'''
 
-import re
 import time
 import threading
 import yaml
