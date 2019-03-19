@@ -51,9 +51,10 @@ def influx_write(json_body, db_client):
 
 if __name__ == '__main__':
     dic_targets = yaml.load(open('/var/targets.yaml', 'rb'))
+    # Add DB hostname/IP to db_list in case you want send result to more than one DB.
+    # Remember to update .credential.json with DBs login.
     db_list = [
-        'app1.net.awsieprod2.linsys.tmcs',
-        'db1.telemetry.netams1.netsys.tmcs'
+        'db'
         ]
     while True:
         thread_ping()
