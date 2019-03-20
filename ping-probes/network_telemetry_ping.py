@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ''' Code for tcp probe. The command is executed every
-    5 seconds and the RTT is extraxcted via regex.
+    3 seconds and the RTT is extraxcted via regex.
     The value is stored in one or more InfluxDb instance'''
 
 import threading
@@ -58,4 +58,4 @@ if __name__ == '__main__':
         ]
     while True:
         thread_ping()
-        time.sleep(1)
+        time.sleep(3)
