@@ -9,7 +9,7 @@ services:
       - INFLUXDB_ADMIN_PASSWORD=supersecretpassword
     volumes:
       - ./influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
-      - ./influxdb/:/var/lib/influxdb/
+      - ./influxdb:/var/lib/influxdb
 
   grafana:
     image: grafana/grafana:latest
@@ -17,7 +17,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./grafana/database:/var/lib/grafana/
+      - ./grafana:/var/lib/grafana
 
   ping:
     image: federico87/network_telemetry_ping:latest
