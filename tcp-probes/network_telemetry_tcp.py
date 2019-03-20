@@ -23,7 +23,7 @@ def thread_tcp():
             thread_targets.start()
             tcp_threads.append(thread_targets)
 
-def influxdb_call(target, region):
+def influxdb_call(target, port, region):
     """ DB json body build """
     json_body = JsonBuilder(Tcp(port, target).run_tcp(), target, region).json_body()
     thread_influx(json_body)
@@ -36,7 +36,7 @@ def thread_influx(json_body):
         db_targets.start()
         db_threads.append(db_targets)
 
-def influx_write(target, port, region):
+def influx_write(json_body, db_client):
     """ write to db"""
     try:
         connect = InfluxDBClient(
