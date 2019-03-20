@@ -27,14 +27,11 @@ python:
   tags:
     - telemetry
   script:
-    - sudo pip3 install jinja2==2.10
     - sudo pip3 install credPass==1.1
     - sudo pip3 install influxdb==5.2.0
     - sudo pip3 install pylint==2.3.1
     - python3 -m pylint --disable=invalid-name ping-probes/network_telemetry_ping.py
-    - python3 -m pylint --disable=invalid-name ping-probes/dashboard_provisioning.py
     - python3 -m pylint --disable=invalid-name tcp-probes/network_telemetry_tcp.py
-    - python3 -m pylint --disable=invalid-name tcp-probes/dashboard_provisioning.py
     - python3 -m pylint --disable=too-few-public-methods --disable=too-many-instance-attributes ping-probes/classes/*.py
     - python3 -m pylint --disable=too-few-public-methods --disable=too-many-instance-attributes tcp-probes/classes/*.py
 
@@ -68,15 +65,6 @@ Dockerfile:
     - ./hadolint tcp-probes/Dockerfile
     - ./hadolint ping-probes/Dockerfile
 
-jinja2:
-  stage: syntax_check
-  tags:
-    - telemetry
-  script:
-    - sudo pip3 install jinjaninja==0.1.2
-    - jinja-ninja tcp-probes/var/dashboard_template.j2
-    - jinja-ninja ping-probes/var/dashboard_template.j2
-
 docker build:
   stage: docker_build
   tags:
@@ -101,8 +89,6 @@ deploy new containers:
   tags:
     - telemetry
   script:
-    - python3 $PWD/ping-probes/dashboard_provisioning.py
-    - python3 $PWD/tcp-probes/dashboard_provisioning.py
     - sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     - sudo chmod +x /usr/local/bin/docker-compose
     - sudo docker-compose up -d
