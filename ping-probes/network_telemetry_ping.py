@@ -37,7 +37,7 @@ def thread_influx(json_body):
         db_threads.append(db_targets)
 
 def influx_write(json_body, db_client):
-    """write to db"""
+    """ write to db """
     try:
         connect = InfluxDBClient(
             host=db_client,
