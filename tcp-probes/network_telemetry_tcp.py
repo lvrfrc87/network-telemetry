@@ -23,10 +23,21 @@ def thread_tcp():
             thread_targets.start()
             tcp_threads.append(thread_targets)
 
-def influxdb_call(target, port, region):
-    ''' tcp probe execution and regex rtt '''
+def influxdb_call(target, region):
+    """ DB json body build """
     json_body = JsonBuilder(Tcp(port, target).run_tcp(), target, region).json_body()
-    for client in db_list:
+    thread_influx(json_body)
+
+def thread_influx(json_body):
+    """ threading for db call"""
+    db_threads = []
+    for db_client in db_list:
+        db_targets = threading.Thread(target=influx_write, args=(json_body, db_client))
+        db_targets.start()
+        db_threads.append(db_targets)
+
+def influxdb_call(target, port, region):
+    """ write to db"""
         try:
             connect = InfluxDBClient(
                 host=client,
