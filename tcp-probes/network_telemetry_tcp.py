@@ -40,10 +40,10 @@ def influx_write(json_body, db_client):
     """ write to db"""
     try:
         connect = InfluxDBClient(
-            host=client,
+            host=db_client,
             port=8086,
-            username=credPass().load(client, 'username'),
-            password=credPass().load(client, 'password'),
+            username=credPass().load(db_client, 'username'),
+            password=credPass().load(db_client, 'password'),
             database='network_telemetry')
         for json in json_body:
             connect.write_points(json)
