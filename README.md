@@ -57,7 +57,7 @@ Influxdb is used as backend database to store the probes results. The data are f
 Influxdb container mounts the database storage under `$PWD/influxdb` and uses a custom config file copied from `$PWD/influxdb/config/influxdb.conf`. Logs for Influxdb are in part disabled and raised to `error` level. That was necessary due to log verbosity that fill the disk space in few days.
 
 Grafana is the more obvious option as frontend web application for the graphing the probes results.
-Grafana is listening to 0.0.0.0:3000 and is the only container exposed to the network. As previously said, the other containers are linked each other with `--link` option passed on `docker run`. Few external folders are mapped do Grafana docker. One of those is the plugin folder and if you want install some plugins you can do it under `$PWDgrafana/database/plugins`. The dashboard settings are also saved on external unit mounted under `$PWD/grafana`. Once up and running, Influxdb has to be added as datasource to Grafana.
+Grafana is listening to 0.0.0.0:3000 and is the only container exposed to the network. As previously said, the other containers are linked each other with `--link` option passed on `docker run`. Few external folders are mapped do Grafana docker. One of those is the plugin folder and if you want install some plugins you can do it under `$PW/grafana/database/plugins`. The dashboard settings are also saved on external unit mounted under `$PWD/grafana`. Once up and running, Influxdb has to be added as datasource to Grafana.
 
 Dashboards are automagically provisioned based on `target.yaml` and a jinja2 template, via deployment script or pipeline. You don't need to add manually.
 
