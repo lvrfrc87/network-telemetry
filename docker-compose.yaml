@@ -8,8 +8,8 @@ services:
       - INFLUXDB_ADMIN_USER=root
       - INFLUXDB_ADMIN_PASSWORD=supersecretpassword
     volumes:
-      - $PWD/influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
-      - $PWD:/var/lib/influxdb/
+      - ./influxdb/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - ./influxdb/:/var/lib/influxdb/
 
   grafana:
     image: grafana/grafana:latest
