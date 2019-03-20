@@ -45,8 +45,7 @@ def influx_write(json_body, db_client):
             username=credPass().load(db_client, 'username'),
             password=credPass().load(db_client, 'password'),
             database='network_telemetry')
-        for json in json_body:
-            connect.write_points(json)
+        connect.write_points(json_body)
     except (NewConnectionError, MaxRetryError, ApiCallError) as error:
         print(error)
 
