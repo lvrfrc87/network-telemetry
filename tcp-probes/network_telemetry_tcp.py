@@ -36,19 +36,19 @@ def thread_influx(json_body):
         db_targets.start()
         db_threads.append(db_targets)
 
-def influxdb_call(target, port, region):
+def influx_write(target, port, region):
     """ write to db"""
-        try:
-            connect = InfluxDBClient(
-                host=client,
-                port=8086,
-                username=credPass().load(client, 'username'),
-                password=credPass().load(client, 'password'),
-                database='network_telemetry')
-            for json in json_body:
-                connect.write_points(json)
-        except (NewConnectionError, MaxRetryError, ApiCallError) as error:
-            print(error)
+    try:
+        connect = InfluxDBClient(
+            host=client,
+            port=8086,
+            username=credPass().load(client, 'username'),
+            password=credPass().load(client, 'password'),
+            database='network_telemetry')
+        for json in json_body:
+            connect.write_points(json)
+    except (NewConnectionError, MaxRetryError, ApiCallError) as error:
+        print(error)
 
 if __name__ == '__main__':
     dic_targets = yaml.load(open('/var/targets.yaml', 'rb'))
