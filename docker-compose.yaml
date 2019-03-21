@@ -12,15 +12,13 @@ services:
       - $HOME/influxdb:/var/lib/influxdb
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:5.0.0
     container_name: grafana
     ports:
       - 3000:3000
     volumes:
-      - $HOME/grafana/database:/var/lib/grafana
-      - $HOME/grafana/dashboards:/etc/grafana/provisioning/dashboards
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
       - $HOME/grafana:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
 
   ping:
     image: federico87/network_telemetry_ping:latest
