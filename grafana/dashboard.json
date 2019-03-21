@@ -1,4 +1,40 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": "5.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": "5.0.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -15,7 +51,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -28,6 +64,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -154,6 +191,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -280,6 +318,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -406,6 +445,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -532,6 +572,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -658,6 +699,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -784,6 +826,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -909,6 +952,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -1034,6 +1078,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -1159,6 +1204,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -1284,6 +1330,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -1409,6 +1456,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 2,
       "format": "ms",
       "gauge": {
@@ -1529,7 +1577,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "${DS_INFLUXDB}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -1550,13 +1598,14 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "paceLength": 10,
       "percentage": false,
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
+      "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
@@ -1901,7 +1950,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "${DS_INFLUXDB}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -1922,13 +1971,14 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "paceLength": 10,
       "percentage": false,
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
+      "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
@@ -2474,6 +2524,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#37872D"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 0,
       "format": "percent",
       "gauge": {
@@ -2603,6 +2654,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#37872D"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 0,
       "format": "percent",
       "gauge": {
@@ -2732,6 +2784,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#37872D"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 0,
       "format": "percent",
       "gauge": {
@@ -2861,6 +2914,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#37872D"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 0,
       "format": "percent",
       "gauge": {
@@ -2990,6 +3044,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#37872D"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 0,
       "format": "percent",
       "gauge": {
@@ -3119,6 +3174,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#37872D"
       ],
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 0,
       "format": "percent",
       "gauge": {
@@ -3243,7 +3299,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "${DS_INFLUXDB}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -3264,13 +3320,14 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "paceLength": 10,
       "percentage": false,
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
+      "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
@@ -3546,7 +3603,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 18,
+  "schemaVersion": 16,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -3584,5 +3641,5 @@
   "timezone": "",
   "title": "Network RTT",
   "uid": "lwnPsAqiz",
-  "version": 41
+  "version": 5
 }
