@@ -77,6 +77,7 @@ Cloning the git repo in his own CoreOS instance, updating the `target.yaml` file
 
 #### Live Demo
 
+http://ec2-35-177-36-166.eu-west-2.compute.amazonaws.com:3000
 
 ### AWS instance
 
