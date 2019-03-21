@@ -17,6 +17,9 @@ services:
     ports:
       - 3000:3000
     volumes:
+      - $HOME/grafana/database:/var/lib/grafana
+      - $HOME/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
       - $HOME/grafana:/var/lib/grafana
 
   ping:

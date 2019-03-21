@@ -5,8 +5,6 @@ stages:
   - pre_deployment
   - deployment
 
-
-
 build environment:
   stage: build_env
   tags:
