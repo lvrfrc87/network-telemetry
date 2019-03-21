@@ -18,7 +18,6 @@ services:
       - 3000:3000
     volumes:
       - $HOME/grafana:/var/lib/grafana
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
 
   ping:
     image: federico87/network_telemetry_ping:latest
