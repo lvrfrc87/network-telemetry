@@ -75,10 +75,6 @@ A pipeline is provided with `.gitlab-ci.yml` for syntax check and deployment in 
 A web front-end developer complains about some connectivity issue between his Django application and mysql backend database. His web application runs in a CoreOS AWS instance. As always happens in these cases, developer blames the network.
 Cloning the git repo in his own CoreOS instance, updating the `target.yaml` files with the DB IP and TCP port, running the pipeline, the developer has a full telemetry setup to verify up to Layer4 connectivity between the Django instance to DB instance. So it will help him if there is a real network connectivity issue (ping), slow application response (TCP) or neither of both.
 
-#### Live Demo
-
-http://ec2-35-177-36-166.eu-west-2.compute.amazonaws.com:3000
-
 ### AWS instance
 
 ![Data Source](screenshots/aws.png)
