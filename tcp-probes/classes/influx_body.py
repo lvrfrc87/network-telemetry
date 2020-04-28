@@ -57,7 +57,7 @@ class JsonBuilder():
                     "packet_received": self.rcvd_pckt,
                     "packet_lost": self.lost_pckt,
                     "packet_lost_percent": self.lost_prc,
-                    "execution_tim": self.exec_time}
+                    "execution_time": self.exec_time}
             }
         ]
         return json_body
