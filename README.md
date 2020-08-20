@@ -98,3 +98,29 @@ http://ec2-35-177-36-166.eu-west-2.compute.amazonaws.com:3000
 ### Grafana TCP panel
 
 ![Data Source](screenshots/tcp.png)
+
+### (InfluxDB) queries!
+
+#### % circuit reliability 
+
+`SELECT mean(percentage) FROM (SELECT ("received"/"transmitted")*100 AS percentage FROM "ping_rtt" WHERE "host" = '8.8.8.8' AND $timeFilter) GROUP BY time($__interval) fill(none)`
+
+![Data Source](screenshots/avg.png)
+
+#### from octets to bits
+
+`SELECT non_negative_derivative(mean("ifInOctets"), 1s)  *8 AS "TenGigE0/1/5" FROM "interface" WHERE ("hostname" = 'my.device.fqdn' AND "ifDescr" = 'TenGigabitEthernet0/1/5') AND $timeFilter GROUP BY time($__interval), "ifDescr" fill(null)`
+
+![Data Source](screenshots/octets.png)
+
+#### interface bandwtih utilization
+
+`SELECT (non_negative_derivative(last("ifInOctets"), 30s) *8*100)/(30*max("ifSpeed")) FROM "interface" WHERE ("hostname" = 'my.device.fqdn' AND "ifDescr" = 'TenGigabitEthernet0/1/5') AND $timeFilter GROUP BY time($__interval) fill(none)`
+
+NOTE: Watch out for DELTA (`30s`)
+
+Cisco: [link](https://www.cisco.com/c/en/us/support/docs/ip/simple-network-management-protocol-snmp/8141-calculate-bandwidth-snmp.html)
+
+Solarwinds: [link](https://support.solarwinds.com/SuccessCenter/s/article/Calculate-interface-bandwidth-utilization?language=en_US)
+
+![Data Source](screenshots/bdw.png)
